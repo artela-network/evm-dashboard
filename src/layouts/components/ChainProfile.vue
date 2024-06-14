@@ -15,7 +15,6 @@ function changeEndpoint(item: Endpoint) {
   <div class="dropdown">
     <label tabindex="0" class="flex items-center">
       <div class="p-1 relative mr-3 cursor-pointer">
-        <img v-lazy="chainStore.logo" class="w-9 h-9 rounded-full" />
         <div
           class="w-2 h-2 rounded-full absolute right-0 bottom-0 shadow" :class="{
             'bg-success': baseStore.connected,
@@ -33,9 +32,7 @@ function changeEndpoint(item: Endpoint) {
           class="capitalize whitespace-nowrap text-base font-semibold text-gray-600 dark:text-gray-200 hidden md:!block"
         >
           {{ 
-            baseStore.latest?.block?.header?.height
-              ? `#${baseStore.latest.block.header.height}`
-              : chainStore.chainName  || '' 
+            chainStore.chainName
           }} <span class="text-error">{{ baseStore.connected ? '' : 'disconnected' }}</span>
         </div>
         <div

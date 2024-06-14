@@ -125,15 +125,11 @@ dayjs()
                 'text-blue-500': item?.title !== 'Favorite',
               }"
             />
-            <img
-              v-if="item?.icon?.image"
-              :src="item?.icon?.image"
-              class="w-6 h-6 rounded-full mr-3"
-            />
+            
             <div
               class="text-base capitalize flex-1 text-gray-700 dark:text-gray-200 whitespace-nowrap"
             >
-              {{ item?.title }}
+              <b>My Dashboard</b>
             </div>
             <div
               v-if="item?.badgeContent"

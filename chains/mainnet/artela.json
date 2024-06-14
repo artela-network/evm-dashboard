@@ -8,13 +8,13 @@
     "coin_type": "60",
     "min_tx_fee": "80000000000",
     "addr_prefix": "art",
-    "logo": "/artela.svg",
+    "logo": "./artela.svg",
     "keplr_features": ["ibc-transfer", "ibc-go", "eth-address-gen", "eth-key-sign"],
     "assets": [{
         "base": "uart",
         "symbol": "ART",
         "exponent": "18",
         "coingecko_id": "",
-        "logo": "/artela.svg"
+        "logo": "./artela.svg"
     }]
 }
