@@ -4,7 +4,7 @@
     "blocks": "Blocks",
     "staking": "Staking",
     "governance": "Governance",
-    "parameters": "Node Info",
+    "parameters": "Status",
     "uptime": "Uptime",
     "state-sync": "State Sync",
     "cosmwasm": "Cosmwasm",
