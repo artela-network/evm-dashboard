@@ -12,10 +12,10 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@artela/wallet-widget": "file:/Users/yuanyuan/go/src/github.com/artela-network/wallet-widget",
+    "@artela/wallet-widget": "^0.1.16",
     "@chenfengyuan/vue-countdown": "2",
-    "@cosmjs/crypto": "^0.32.3",
     "@cosmjs/amino": "^0.32.3",
+    "@cosmjs/crypto": "^0.32.3",
     "@cosmjs/encoding": "^0.32.3",
     "@cosmjs/stargate": "^0.32.3",
     "@iconify/vue": "^4.1.0",
