@@ -5,7 +5,6 @@ import { computed, onMounted, ref } from "vue";
 import TextElement from "@/components/dynamic/TextElement.vue";
 import DynamicComponent from '@/components/dynamic/DynamicComponent.vue';
 import { codeToHtml } from 'shiki'
-import { useWasmStore } from "@/modules/[chain]/cosmwasm/WasmStore";
 import { toBase64 } from "@cosmjs/encoding";
 
 import { JsonViewer } from "vue3-json-viewer"
@@ -54,7 +53,6 @@ const baseurl = "https://prod.compiler.welldonestudio.io"
 const verification = ref<Verification>({});
 const sourceCode = ref<SourceCode<string>[]>([]);
 const schemas = ref<SourceCode<string>[]>([]);
-const wasmStore = useWasmStore();
 const baseStore = useBaseStore();
 const dialog = useTxDialog();
 const result = ref<Record<string, any>>({});
@@ -168,16 +166,6 @@ function callFunction(title: string, method: string, arg: Argument) {
     execution[method] = args 
     console.log("execution", execution)
     dialog.open('wasm_execute_contract', { contract: props.contract, execution})
-  } else {
-    // QueryMsg
-    wasmStore.wasmClient
-      .getWasmContractSmartQuery(props.contract, `{"${method}": ${JSON.stringify(args)}}`)
-      .then((x) => {
-          result.value[`${title}-${method}`] = x;
-      })
-      .catch((err) => {
-        result.value[`${title}-${method}`] = err;
-      });
   }
 }
 
