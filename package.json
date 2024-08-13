@@ -12,7 +12,7 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@artela/wallet-widget": "0.1.19",
+    "@artela/wallet-widget": "0.1.20",
     "@chenfengyuan/vue-countdown": "2",
     "@cosmjs/amino": "^0.32.3",
     "@cosmjs/crypto": "^0.32.3",
