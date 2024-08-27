@@ -1,5 +1,6 @@
 {
   "module": {
+    "artela": "首页",
     "dashboard": "面板首页",
     "blocks": "区块和交易",
     "staking": "质押生息",

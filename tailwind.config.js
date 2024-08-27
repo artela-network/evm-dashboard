@@ -11,7 +11,14 @@ module.exports = {
         main: 'var(--text-main)',
         secondary: 'var(--text-secondary)',
         active: 'var(--bg-active)',
-      }
+      },
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0000C9',
+          },
+        },
+      },
     },
   },
   plugins: [require('daisyui')],

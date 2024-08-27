@@ -391,7 +391,7 @@ const amount = computed({
   {
     meta: {
       i18n: 'dashboard',
-      order: 1,
+      order: 5,
     }
   }
 </route>

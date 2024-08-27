@@ -1,5 +1,6 @@
 {
   "module": {
+    "artela": "ArtelaNetwork",
     "dashboard": "Wallet",
     "blocks": "Blocks",
     "staking": "Staking",

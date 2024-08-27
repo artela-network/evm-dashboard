@@ -44,7 +44,7 @@ const changeOpen = (index: Number) => {
   }
 };
 const showDiscord = window.location.host.search('ping.pub') > -1;
-
+console.log(blockchain.computedChainMenu,'--==--')
 function isNavGroup(nav: VerticalNavItems | any): nav is NavGroup {
    return (<NavGroup>nav).children !== undefined;
 }
@@ -80,10 +80,7 @@ dayjs()
     >
       <div class="flex justify-between mt-1 pl-4 py-4 mb-1">
         <RouterLink to="/" class="flex items-center">
-          <img class="w-10 h-10" src="../../assets/logo.svg" />
-          <h1 class="flex-1 ml-3 text-2xl font-semibold dark:text-white">
-            Artela Network
-          </h1>
+          <img src="../../assets/logo.svg" />
         </RouterLink>
         <div
           class="pr-4 cursor-pointer xl:!hidden"
@@ -113,32 +110,7 @@ dayjs()
             class="cursor-pointer !h-10 block"
             @click="changeOpen(index)"
           />
-          <div
-            class="collapse-title !py-0 px-4 flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-[#373f59]"
-          >
-            <Icon
-              v-if="item?.icon?.icon"
-              :icon="item?.icon?.icon"
-              class="text-xl mr-2"
-              :class="{
-                'text-yellow-500': item?.title === 'Favorite',
-                'text-blue-500': item?.title !== 'Favorite',
-              }"
-            />
-            
-            <div
-              class="text-base capitalize flex-1 text-gray-700 dark:text-gray-200 whitespace-nowrap"
-            >
-              <b>My Dashboard</b>
-            </div>
-            <div
-              v-if="item?.badgeContent"
-              class="mr-6 badge badge-sm text-white border-none"
-              :class="item?.badgeClass"
-            >
-              {{ item?.badgeContent }}
-            </div>
-          </div>
+
           <div class="collapse-content">            
             <div v-for="(el, key) of item?.children" class="menu bg-base-100 w-full !p-0">
               <RouterLink
@@ -146,27 +118,10 @@ dayjs()
                 @click="sidebarShow = false"
                 class="hover:bg-gray-100 dark:hover:bg-[#373f59] rounded cursor-pointer px-3 py-2 flex items-center"
                 :class="{
-                  '!bg-primary': selected($route, el),
+                  '!bg-[#0000c9]': selected($route, el),
                 }"
                 :to="el.to"
               >
-                <Icon
-                  v-if="!el?.icon?.image"
-                  icon="mdi:chevron-right"
-                  class="mr-2 ml-3"
-                  :class="{
-                    'text-white':
-                      $route.path === el?.to?.path &&
-                      item?.title !== 'Favorite',
-                  }"
-                />
-                <img
-                  v-if="el?.icon?.image"
-                  :src="el?.icon?.image"
-                  class="w-6 h-6 rounded-full mr-3 ml-4 " :class="{
-                  'border border-gray-300 bg-white': selected($route, el),
-                }"
-                />
                 <div
                   class="text-base capitalize text-gray-500 dark:text-gray-300"
                   :class="{
@@ -174,26 +129,6 @@ dayjs()
                   }"
                 >
                   {{ item?.title === 'Favorite' ? el?.title : $t(el?.title) }}
-                </div>
-              </RouterLink>
-            </div>
-            <div v-if="index === 0 && dashboard.networkType === NetworkType.Testnet" class="menu bg-base-100 w-full !p-0">
-              <RouterLink 
-              class="hover:bg-gray-100 dark:hover:bg-[#373f59] rounded cursor-pointer px-3 py-2 flex items-center"
-              :to="`/${blockchain.chainName}/faucet`">
-                <Icon
-                  icon="mdi:chevron-right"
-                  class="mr-2 ml-3"
-                  ></Icon>
-                <div
-                  class="text-base capitalize text-gray-500 dark:text-gray-300"
-                >
-                  Faucet
-                </div>
-                <div
-                  class="badge badge-sm text-white border-none badge-error ml-auto" 
-                >
-                  New
                 </div>
               </RouterLink>
             </div>
@@ -233,12 +168,7 @@ dayjs()
             {{ item?.badgeContent }}
           </div>
         </RouterLink>
-        <div
-          v-if="isNavTitle(item)"
-          class="px-4 text-sm text-gray-400 pb-2 uppercase"
-        >
-          {{ item?.heading }}
-        </div>
+
       </div>
     </div>
     <div class="xl:!ml-64 px-3 pt-4">
