@@ -18,6 +18,7 @@ import { computed } from '@vue/reactivity';
 import CardStatisticsVertical from '@/components/CardStatisticsVertical.vue';
 import ProposalListItem from '@/components/ProposalListItem.vue';
 import ArrayObjectElement from '@/components/dynamic/ArrayObjectElement.vue'
+import { bech32 } from 'bech32';
 
 const props = defineProps(['chain']);
 
@@ -121,7 +122,18 @@ const amount = computed({
     quantity.value = val / ticker.value.converted_last.usd || 0
   }
 })
+function cosmosToEvmAddress(cosmosAddress: string): string {
+  // 解码 Bech32 地址
+  const decoded = bech32.decode(cosmosAddress);
+  const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
 
+  // 将公钥哈希转换为 EVM 地址
+  const evmAddress = '0x' + Array.from(pubkeyHash)
+    .map(byte => byte.toString(16).padStart(2, '0'))
+    .join('');
+
+  return evmAddress;
+}
 </script>
 
 <template>
@@ -276,7 +288,7 @@ const amount = computed({
 
     <div class="bg-base-100 rounded mt-4 shadow">
       <div class="flex justify-between px-4 pt-4 pb-2 text-lg font-semibold text-main">
-        <span class="truncate" >{{ walletStore.currentAddress || 'Not Connected' }}</span>
+        <span class="truncate" >{{cosmosToEvmAddress(walletStore.currentAddress) || 'Not Connected' }}</span>
         <RouterLink v-if="walletStore.currentAddress"
           class="float-right text-sm cursor-pointert link link-primary no-underline font-medium"
           :to="`/${chain}/account/${walletStore.currentAddress}`">{{ $t('index.more') }}</RouterLink>
