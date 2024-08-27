@@ -123,28 +123,152 @@ const amount = computed({
   }
 })
 function cosmosToEvmAddress(cosmosAddress: string): string {
-  // 解码 Bech32 地址
-  const decoded = bech32.decode(cosmosAddress);
-  const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
+  // 检查地址长度和前缀
+  if (!cosmosAddress || cosmosAddress.length < 10 || !cosmosAddress.startsWith('art')) {
+    console.error('Invalid Cosmos address');
+    return ''; // 返回空字符串表示无效地址
+  }
 
-  // 将公钥哈希转换为 EVM 地址
-  const evmAddress = '0x' + Array.from(pubkeyHash)
-    .map(byte => byte.toString(16).padStart(2, '0'))
-    .join('');
+  try {
+    // 解码 Bech32 地址
+    const decoded = bech32.decode(cosmosAddress);
+    const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
 
-  return evmAddress;
+    // 将公钥哈希转换为 EVM 地址
+    const evmAddress = '0x' + Array.from(pubkeyHash)
+      .map(byte => byte.toString(16).padStart(2, '0'))
+      .join('');
+
+    return evmAddress;
+  } catch (error) {
+    console.error('Failed to decode address:', error);
+    return ''; // 返回空字符串表示解码失败
+  }
 }
 </script>
 
 <template>
   <div>
+    <div class="bg-base-100 rounded mt-4 shadow">
+      <div class="flex justify-between px-4 pt-4 pb-2 text-lg font-semibold text-main">
+        <span class="truncate">{{ cosmosToEvmAddress(walletStore.currentAddress) || 'Not Connected' }}</span>
+        <RouterLink v-if="walletStore.currentAddress"
+          class="float-right text-sm cursor-pointert link link-primary no-underline font-medium"
+          :to="`/${chain}/account/${walletStore.currentAddress}`">{{ $t('index.more') }}</RouterLink>
+      </div>
+      <div class="grid grid-cols-1 md:!grid-cols-4 auto-cols-auto gap-4 px-4 pb-6">
+        <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
+          <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
+          <div class="text-lg font-semibold text-main">
+            {{ format.formatToken(walletStore.balanceOfStakingToken) }}
+          </div>
+          <div class="text-sm" :class="color">
+            ${{ format.tokenValue(walletStore.balanceOfStakingToken) }}
+          </div>
+        </div>
+        <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
+          <div class="text-sm mb-1">{{ $t('module.staking') }}</div>
+          <div class="text-lg font-semibold text-main">
+            {{ format.formatToken(walletStore.stakingAmount) }}
+          </div>
+          <div class="text-sm" :class="color">
+            ${{ format.tokenValue(walletStore.stakingAmount) }}
+          </div>
+        </div>
+        <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
+          <div class="text-sm mb-1">{{ $t('index.reward') }}</div>
+          <div class="text-lg font-semibold text-main">
+            {{ format.formatToken(walletStore.rewardAmount) }}
+          </div>
+          <div class="text-sm" :class="color">
+            ${{ format.tokenValue(walletStore.rewardAmount) }}
+          </div>
+        </div>
+        <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
+          <div class="text-sm mb-1">{{ $t('index.unbonding') }}</div>
+          <div class="text-lg font-semibold text-main">
+            {{ format.formatToken(walletStore.unbondingAmount) }}
+          </div>
+          <div class="text-sm" :class="color">
+            ${{ format.tokenValue(walletStore.unbondingAmount) }}
+          </div>
+        </div>
+      </div>
+
+      <div v-if="walletStore.delegations.length > 0" class="px-4 pb-4 overflow-auto">
+        <table class="table table-compact w-full table-zebra">
+          <thead>
+            <tr>
+              <th>{{ $t('account.validator') }}</th>
+              <th>{{ $t('account.delegations') }}</th>
+              <th>{{ $t('account.rewards') }}</th>
+              <th>{{ $t('staking.actions') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in walletStore.delegations" :key="index">
+              <td>
+                <RouterLink class="link link-primary no-underline"
+                  :to="`/${chain}/staking/${item?.delegation?.validator_address}`">
+                  {{
+                    format.validatorFromBech32(
+                      item?.delegation?.validator_address
+                    )
+                  }}
+                </RouterLink>
+              </td>
+              <td>{{ format.formatToken(item?.balance) }}</td>
+              <td>
+                {{
+                  format.formatTokens(
+                    walletStore?.rewards?.rewards?.find(
+                      (el) =>
+                        el?.validator_address ===
+                        item?.delegation?.validator_address
+                    )?.reward)
+                }}
+              </td>
+              <td>
+                <div>
+                  <label for="delegate" class="btn !btn-xs !btn-primary btn-ghost rounded-sm mr-2"
+                    @click="dialog.open('delegate', { validator_address: item.delegation.validator_address }, updateState)">
+                    {{ $t('account.btn_delegate') }}
+                  </label>
+                  <label for="withdraw" class="btn !btn-xs !btn-primary btn-ghost rounded-sm mr-2"
+                    @click="dialog.open('withdraw', { validator_address: item.delegation.validator_address }, updateState)">
+                    {{ $t('index.btn_withdraw_reward') }}
+                  </label>
+                  <label for="unbond" class="btn !btn-xs !btn-primary btn-ghost rounded-sm mr-2"
+                    @click="dialog.open('unbond', { validator_address: item.delegation.validator_address }, updateState)">
+                    {{ $t('account.btn_unbond') }}
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 px-4 pb-6 mt-4">
+        <label for="send" class="btn !bg-yes !border-yes text-white" @click="dialog.open('send', {}, updateState)">{{
+          $t('account.btn_send') }}</label>
+        <label for="delegate" class="btn !bg-info !border-info text-white"
+          @click="dialog.open('delegate', {}, updateState)">{{ $t('account.btn_delegate') }}</label>
+        <RouterLink to="/wallet/receive" class="btn !bg-info !border-info text-white hidden">{{ $t('index.receive') }}
+        </RouterLink>
+      </div>
+      <Teleport to="body">
+        <ping-token-convert :chain-name="blockchain?.current?.prettyName" :endpoint="blockchain?.endpoint?.address"
+          :hd-path="walletStore?.connectedWallet?.hdPath"></ping-token-convert>
+      </Teleport>
+    </div>
     <div v-if="coinInfo && coinInfo.name" class="bg-base-100 rounded shadow">
       <div class="grid grid-cols-2 md:grid-cols-3 p-4">
         <div class="col-span-2 md:col-span-1">
           <div class="text-xl font-semibold text-main">
             {{ coinInfo.name }} (<span class="uppercase">{{
               coinInfo.symbol
-            }}</span>)
+              }}</span>)
           </div>
           <div class="text-xs mt-2">
             {{ $t('index.rank') }}:
@@ -204,7 +328,7 @@ function cosmosToEvmAddress(cosmosAddress: string): string {
                         </div>
 
                         <div class="text-base text-main">
-                           ${{ item?.converted_last?.usd }}
+                          ${{ item?.converted_last?.usd }}
                         </div>
                       </div>
                     </li>
@@ -215,7 +339,23 @@ function cosmosToEvmAddress(cosmosAddress: string): string {
 
             <div class="flex">
               <label class="btn btn-primary !px-1 my-5 mr-2" for="calculator">
-                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="4" y="2" width="16" height="20" rx="2"></rect> <line x1="8" x2="16" y1="6" y2="6"></line> <line x1="16" x2="16" y1="14" y2="18"></line> <path d="M16 10h.01"></path> <path d="M12 10h.01"></path> <path d="M8 10h.01"></path> <path d="M12 14h.01"></path> <path d="M8 14h.01"></path> <path d="M12 18h.01"></path> <path d="M8 18h.01"></path> </g></svg>
+                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                    <line x1="8" x2="16" y1="6" y2="6"></line>
+                    <line x1="16" x2="16" y1="14" y2="18"></line>
+                    <path d="M16 10h.01"></path>
+                    <path d="M12 10h.01"></path>
+                    <path d="M8 10h.01"></path>
+                    <path d="M12 14h.01"></path>
+                    <path d="M8 14h.01"></path>
+                    <path d="M12 18h.01"></path>
+                    <path d="M8 18h.01"></path>
+                  </g>
+                </svg>
               </label>
               <!-- Put this part before </body> tag -->
               <input type="checkbox" id="calculator" class="modal-toggle" />
@@ -228,7 +368,8 @@ function cosmosToEvmAddress(cosmosAddress: string): string {
                         <label class="join-item btn">
                           <span class="uppercase">{{ coinInfo.symbol }}</span>
                         </label>
-                        <input type="number" v-model="qty" min="0" placeholder="Input a number" class="input grow input-bordered join-item" />
+                        <input type="number" v-model="qty" min="0" placeholder="Input a number"
+                          class="input grow input-bordered join-item" />
                       </div>
                     </div>
                     <div class="divider">=</div>
@@ -237,15 +378,17 @@ function cosmosToEvmAddress(cosmosAddress: string): string {
                         <label class="join-item btn">
                           <span>USD</span>
                         </label>
-                        <input type="number" v-model="amount" min="0" placeholder="Input amount" class="join-item grow input input-bordered" />
+                        <input type="number" v-model="amount" min="0" placeholder="Input amount"
+                          class="join-item grow input input-bordered" />
                       </div>
                     </div>
                   </div>
                 </div>
                 <label class="modal-backdrop" for="calculator">{{ $t('index.close') }}</label>
               </div>
-              <a class="my-5 !text-white btn grow" :class="{'!btn-success': store.trustColor === 'green', '!btn-warning': store.trustColor === 'yellow'}" :href="ticker.trade_url"
-                target="_blank">
+              <a class="my-5 !text-white btn grow"
+                :class="{ '!btn-success': store.trustColor === 'green', '!btn-warning': store.trustColor === 'yellow' }"
+                :href="ticker.trade_url" target="_blank">
                 {{ $t('index.buy') }} {{ coinInfo.symbol || '' }}
               </a>
             </div>
@@ -286,116 +429,7 @@ function cosmosToEvmAddress(cosmosAddress: string): string {
       </div>
     </div>
 
-    <div class="bg-base-100 rounded mt-4 shadow">
-      <div class="flex justify-between px-4 pt-4 pb-2 text-lg font-semibold text-main">
-        <span class="truncate" >{{cosmosToEvmAddress(walletStore.currentAddress) || 'Not Connected' }}</span>
-        <RouterLink v-if="walletStore.currentAddress"
-          class="float-right text-sm cursor-pointert link link-primary no-underline font-medium"
-          :to="`/${chain}/account/${walletStore.currentAddress}`">{{ $t('index.more') }}</RouterLink>
-      </div>
-      <div class="grid grid-cols-1 md:!grid-cols-4 auto-cols-auto gap-4 px-4 pb-6">
-        <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
-          <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
-          <div class="text-lg font-semibold text-main">
-            {{ format.formatToken(walletStore.balanceOfStakingToken) }}
-          </div>
-          <div class="text-sm" :class="color">
-            ${{ format.tokenValue(walletStore.balanceOfStakingToken) }}
-          </div>
-        </div>
-        <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
-          <div class="text-sm mb-1">{{ $t('module.staking') }}</div>
-          <div class="text-lg font-semibold text-main">
-            {{ format.formatToken(walletStore.stakingAmount) }}
-          </div>
-          <div class="text-sm" :class="color">
-            ${{ format.tokenValue(walletStore.stakingAmount) }}
-          </div>
-        </div>
-        <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
-          <div class="text-sm mb-1">{{ $t('index.reward') }}</div>
-          <div class="text-lg font-semibold text-main">
-            {{ format.formatToken(walletStore.rewardAmount) }}
-          </div>
-          <div class="text-sm" :class="color">
-            ${{ format.tokenValue(walletStore.rewardAmount) }}
-          </div>
-        </div>
-        <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
-          <div class="text-sm mb-1">{{ $t('index.unbonding') }}</div>
-          <div class="text-lg font-semibold text-main">
-            {{ format.formatToken(walletStore.unbondingAmount) }}
-          </div>
-          <div class="text-sm" :class="color">
-            ${{ format.tokenValue(walletStore.unbondingAmount) }}
-          </div>
-        </div>
-      </div>
 
-      <div v-if="walletStore.delegations.length > 0" class="px-4 pb-4 overflow-auto">
-        <table class="table table-compact w-full table-zebra">
-          <thead>
-            <tr>
-              <th>{{ $t('account.validator') }}</th>
-              <th>{{ $t('account.delegations') }}</th>
-              <th>{{ $t('account.rewards') }}</th>
-              <th>{{ $t('staking.actions') }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in walletStore.delegations" :key="index">
-              <td>
-                <RouterLink class="link link-primary no-underline" :to="`/${chain}/staking/${item?.delegation?.validator_address}`">
-                {{
-                  format.validatorFromBech32(
-                    item?.delegation?.validator_address
-                  )
-                }}
-                </RouterLink>
-              </td>
-              <td>{{ format.formatToken(item?.balance) }}</td>
-              <td>
-                {{
-                  format.formatTokens(
-                    walletStore?.rewards?.rewards?.find(
-                      (el) =>
-                        el?.validator_address ===
-                        item?.delegation?.validator_address
-                    )?.reward)
-                }}
-              </td>
-              <td>
-                <div>
-                  <label for="delegate" class="btn !btn-xs !btn-primary btn-ghost rounded-sm mr-2"
-                    @click="dialog.open('delegate', { validator_address: item.delegation.validator_address }, updateState)">
-                    {{ $t('account.btn_delegate') }}
-                  </label>
-                  <label for="withdraw" class="btn !btn-xs !btn-primary btn-ghost rounded-sm mr-2"
-                    @click="dialog.open('withdraw', { validator_address: item.delegation.validator_address }, updateState)">
-                    {{ $t('index.btn_withdraw_reward') }}
-                  </label>
-                  <label for="unbond" class="btn !btn-xs !btn-primary btn-ghost rounded-sm mr-2"
-                    @click="dialog.open('unbond', { validator_address: item.delegation.validator_address }, updateState)">
-                    {{ $t('account.btn_unbond') }}
-                  </label>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="grid grid-cols-2 gap-4 px-4 pb-6 mt-4">
-        <label for="send" class="btn !bg-yes !border-yes text-white" @click="dialog.open('send', {}, updateState)">{{ $t('account.btn_send') }}</label>
-        <label for="delegate" class="btn !bg-info !border-info text-white"
-          @click="dialog.open('delegate', {}, updateState)">{{ $t('account.btn_delegate') }}</label>
-        <RouterLink to="/wallet/receive" class="btn !bg-info !border-info text-white hidden">{{ $t('index.receive') }}</RouterLink>
-      </div>
-      <Teleport to="body">
-        <ping-token-convert :chain-name="blockchain?.current?.prettyName" :endpoint="blockchain?.endpoint?.address"
-          :hd-path="walletStore?.connectedWallet?.hdPath"></ping-token-convert>
-      </Teleport>
-    </div>
   </div>
 </template>
 
