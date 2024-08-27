@@ -56,7 +56,8 @@ onMounted(() => {
 {
   meta: {
     i18n: 'parameters',
-    order: 50
+    order: 50,
+    icon: 'state.svg'
   }
 }
 </route>

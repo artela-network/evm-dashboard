@@ -25,7 +25,7 @@ const baseStore = useBaseStore();
 const current = ref(''); // the current chain
 const temp = ref('')
 blockchain.$subscribe((m, s) => {
-  if(current.value ===s.chainName && temp.value != s.endpoint.address) {
+  if (current.value === s.chainName && temp.value != s.endpoint.address) {
     temp.value = s.endpoint.address
     blockchain.initial();
   }
@@ -44,15 +44,15 @@ const changeOpen = (index: Number) => {
   }
 };
 const showDiscord = window.location.host.search('ping.pub') > -1;
-console.log(blockchain.computedChainMenu,'--==--')
+console.log(blockchain.computedChainMenu, '--==--')
 function isNavGroup(nav: VerticalNavItems | any): nav is NavGroup {
-   return (<NavGroup>nav).children !== undefined;
+  return (<NavGroup>nav).children !== undefined;
 }
 function isNavLink(nav: VerticalNavItems | any): nav is NavLink {
-   return (<NavLink>nav).to !== undefined;
+  return (<NavLink>nav).to !== undefined;
 }
 function isNavTitle(nav: VerticalNavItems | any): nav is NavSectionTitle {
-   return (<NavSectionTitle>nav).heading !== undefined;
+  return (<NavSectionTitle>nav).heading !== undefined;
 }
 function selected(route: any, nav: NavLink) {
   const b = route.path === nav.to?.path || route.path.startsWith(nav.to?.path) && nav.title.indexOf('dashboard') === -1
@@ -61,7 +61,16 @@ function selected(route: any, nav: NavLink) {
 const blocktime = computed(() => {
   return dayjs(baseStore.latest?.block?.header?.time)
 });
+function getIcon(el: any, route: any) {
+  const icons = import.meta.glob('../../assets/nav/*.svg', { eager: true });
 
+  let iconPath = `../../assets/nav/${el.icon?.icon}`;
+  if (selected(route, el)) {
+    iconPath = `../../assets/nav/w-${el.icon?.icon}`;
+  }
+  // @ts-ignore
+  return icons[iconPath]?.default || '';
+}
 const behind = computed(() => {
   const current = dayjs().subtract(10, 'minute')
   return blocktime.value.isBefore(current)
@@ -76,58 +85,35 @@ dayjs()
     <!-- sidebar -->
     <div
       class="w-64 fixed z-50 left-0 top-0 bottom-0 overflow-auto bg-base-100 border-r border-gray-100 dark:border-gray-700"
-      :class="{ block: sidebarShow, 'hidden xl:!block': !sidebarShow }"
-    >
+      :class="{ block: sidebarShow, 'hidden xl:!block': !sidebarShow }">
       <div class="flex justify-between mt-1 pl-4 py-4 mb-1">
         <RouterLink to="/" class="flex items-center">
           <img src="../../assets/logo.svg" />
         </RouterLink>
-        <div
-          class="pr-4 cursor-pointer xl:!hidden"
-          @click="sidebarShow = false"
-        >
+        <div class="pr-4 cursor-pointer xl:!hidden" @click="sidebarShow = false">
           <Icon icon="mdi-close" class="text-2xl" />
         </div>
       </div>
-      <div
-        v-for="(item, index) of blockchain.computedChainMenu"
-        :key="index"
-        class="px-2"
-      >
-        <div
-          v-if="isNavGroup(item)"
-          :tabindex="index"
-          class="collapse"
-          :class="{
-            'collapse-arrow':index > 0 && item?.children?.length > 0,
-            'collapse-open': index === 0 && sidebarOpen,
-            'collapse-close': index === 0 && !sidebarOpen,
-          }"
-        >
-          <input
-            v-if="index > 0"
-            type="checkbox"
-            class="cursor-pointer !h-10 block"
-            @click="changeOpen(index)"
-          />
+      <div v-for="(item, index) of blockchain.computedChainMenu" :key="index" class="px-2">
+        <div v-if="isNavGroup(item)" :tabindex="index" class="collapse" :class="{
+          'collapse-arrow': index > 0 && item?.children?.length > 0,
+          'collapse-open': index === 0 && sidebarOpen,
+          'collapse-close': index === 0 && !sidebarOpen,
+        }">
+          <input v-if="index > 0" type="checkbox" class="cursor-pointer !h-10 block" @click="changeOpen(index)" />
 
-          <div class="collapse-content">            
+          <div class="collapse-content">
             <div v-for="(el, key) of item?.children" class="menu bg-base-100 w-full !p-0">
-              <RouterLink
-                v-if="isNavLink(el)"
-                @click="sidebarShow = false"
-                class="hover:bg-gray-100 dark:hover:bg-[#373f59] rounded cursor-pointer px-3 py-2 flex items-center"
+              <RouterLink v-if="isNavLink(el)" @click="sidebarShow = false"
+                class="hover:bg-gray-100 dark:hover:bg-[#373f59] rounded cursor-pointer px-3 py-2 flex items-center gap-2"
                 :class="{
                   '!bg-[#0000c9]': selected($route, el),
-                }"
-                :to="el.to"
-              >
-                <div
-                  class="text-base capitalize text-gray-500 dark:text-gray-300"
-                  :class="{
-                    '!text-white': selected($route, el),
-                  }"
-                >
+                }" :to="el.to">
+                <!-- <img src="../../assets/nav/stak.svg" /> -->
+                <img :src="getIcon(el, $route)" />
+                <div class="text-base capitalize text-gray-500 dark:text-gray-300" :class="{
+                  '!text-white': selected($route, el),
+                }">
                   {{ item?.title === 'Favorite' ? el?.title : $t(el?.title) }}
                 </div>
               </RouterLink>
@@ -135,36 +121,18 @@ dayjs()
           </div>
         </div>
 
-        <RouterLink
-          v-if="isNavLink(item)"
-          :to="item?.to"
-          @click="sidebarShow = false"
-          class="cursor-pointer rounded-lg px-4 flex items-center py-2 hover:bg-gray-100 dark:hover:bg-[#373f59]"
-        >
-          <Icon
-            v-if="item?.icon?.icon"
-            :icon="item?.icon?.icon"
-            class="text-xl mr-2"
-            :class="{
-              'text-yellow-500': item?.title === 'Favorite',
-              'text-blue-500': item?.title !== 'Favorite',
-            }"
-          />
-          <img
-            v-if="item?.icon?.image"
-            :src="item?.icon?.image"
-            class="w-6 h-6 rounded-full mr-3 border border-blue-100"
-          />
-          <div
-            class="text-base capitalize flex-1 text-gray-700 dark:text-gray-200 whitespace-nowrap"
-          >
+        <RouterLink v-if="isNavLink(item)" :to="item?.to" @click="sidebarShow = false"
+          class="cursor-pointer rounded-lg px-4 flex items-center py-2 hover:bg-gray-100 dark:hover:bg-[#373f59]">
+          <Icon v-if="item?.icon?.icon" :icon="item?.icon?.icon" class="text-xl mr-2" :class="{
+            'text-yellow-500': item?.title === 'Favorite',
+            'text-blue-500': item?.title !== 'Favorite',
+          }" />
+          <img v-if="item?.icon?.image" :src="item?.icon?.image"
+            class="w-6 h-6 rounded-full mr-3 border border-blue-100" />
+          <div class="text-base capitalize flex-1 text-gray-700 dark:text-gray-200 whitespace-nowrap">
             {{ item?.title }}
           </div>
-          <div
-            v-if="item?.badgeContent"
-            class="badge badge-sm text-white border-none" 
-            :class="item?.badgeClass"
-          >
+          <div v-if="item?.badgeContent" class="badge badge-sm text-white border-none" :class="item?.badgeClass">
             {{ item?.badgeContent }}
           </div>
         </RouterLink>
@@ -173,13 +141,8 @@ dayjs()
     </div>
     <div class="xl:!ml-64 px-3 pt-4">
       <!-- header -->
-      <div
-        class="flex items-center py-3 bg-base-100 mb-4 rounded px-4 sticky top-0 z-10"
-      >
-        <div
-          class="text-2xl pr-3 cursor-pointer xl:!hidden"
-          @click="sidebarShow = true"
-        >
+      <div class="flex items-center py-3 bg-base-100 mb-4 rounded px-4 sticky top-0 z-10">
+        <div class="text-2xl pr-3 cursor-pointer xl:!hidden" @click="sidebarShow = true">
           <Icon icon="mdi-menu" />
         </div>
 
@@ -194,16 +157,16 @@ dayjs()
 
       <!-- 👉 Pages -->
       <div style="min-height: calc(100vh - 180px);">
-          <div v-if="behind" class="alert alert-error mb-4">
-              <div class="flex gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                      class="stroke-current flex-shrink-0 w-6 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <span>{{ $t('pages.out_of_sync') }} {{ blocktime.format() }} ({{ blocktime.fromNow() }})</span>
-              </div>
+        <div v-if="behind" class="alert alert-error mb-4">
+          <div class="flex gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              class="stroke-current flex-shrink-0 w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>{{ $t('pages.out_of_sync') }} {{ blocktime.format() }} ({{ blocktime.fromNow() }})</span>
           </div>
+        </div>
         <RouterView v-slot="{ Component }">
           <Transition mode="out-in">
             <Component :is="Component" />

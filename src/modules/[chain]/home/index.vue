@@ -12,7 +12,8 @@
   {
     meta: {
       i18n: 'artela',
-      order: 1
+      order: 1,
+      icon: 'art.svg'
     }
   }
 </route>

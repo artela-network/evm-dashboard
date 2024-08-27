@@ -496,9 +496,9 @@ loadAvatars();
   {
     meta: {
       i18n: 'staking',
-      order: 2
+      order: 2,
+      icon: 'stak.svg'
     },
-    icon:"staking"
   }
 </route>
 

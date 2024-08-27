@@ -43,10 +43,11 @@ function page(p: number) {
     </div>
 </template>
 <route>
-  {
-    meta: {
-      i18n: 'governance',
-      order: 3
+    {
+      meta: {
+        i18n: 'governance',
+        order: 3,
+        icon: 'gov.svg'
+      }
     }
-  }
-</route>
+  </route>
