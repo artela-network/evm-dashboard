@@ -100,7 +100,7 @@ const currentAddress2 = () => {
           class="block py-2 px-2 hover:bg-gray-100 text-[#ED4E00] dark:hover:bg-[#353f5a] rounded cursor-pointer"
           @click="walletStore.disconnect()">Disconnect</a>
       </div>
-    </div>
+    </div> 
     <div class="toast" v-show="showCopyToast === 1">
       <div class="alert alert-success">
         <div class="text-xs md:!text-sm">
