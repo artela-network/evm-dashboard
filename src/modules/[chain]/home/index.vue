@@ -1,5 +1,71 @@
 <script lang="ts" setup>
+import { useBaseStore, useBlockchain, useWalletStore } from '@/stores';
+import { Icon } from '@iconify/vue';
+import { ref, computed } from 'vue';
+import { bech32 } from 'bech32';
 
+const walletStore = useWalletStore();
+const chainStore = useBlockchain();
+const baseStore = useBaseStore();
+// walletStore.$subscribe((m, s) => {
+//   console.log(m, s);
+// });
+function walletStateChange(res: any) {
+  walletStore.setConnectedWallet(res.detail?.value);
+}
+let showCopyToast = ref(0);
+async function copyAdress(address: string) {
+  try {
+    await navigator.clipboard.writeText(address);
+    showCopyToast.value = 1;
+    setTimeout(() => {
+      showCopyToast.value = 0;
+    }, 1000);
+  } catch (err) {
+    showCopyToast.value = 2;
+    setTimeout(() => {
+      showCopyToast.value = 0;
+    }, 1000);
+  }
+}
+const tipMsg = computed(() => {
+  return showCopyToast.value === 2
+    ? { class: 'error', msg: 'Copy Error!' }
+    : { class: 'success', msg: 'Copy Success!' };
+});
+
+
+const isEvmFormat = ref(true);
+// Computed property to determine the button text
+const addressFormat = computed(() => (isEvmFormat.value ? 'EVM' : 'Cosmos'));
+
+// Method to toggle the address format
+const toggleAddressFormat = () => {
+  isEvmFormat.value = !isEvmFormat.value;
+};
+
+function cosmosToEvmAddress(cosmosAddress: string): string {
+  // 检查 bech32 是否已正确导入
+  if (!cosmosAddress) {
+    return ''
+  }
+
+  // 解码 Bech32 地址
+  const decoded = bech32.decode(cosmosAddress);
+  const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
+
+  // 将公钥哈希转换为 EVM 地址
+  const evmAddress = '0x' + Array.from(pubkeyHash)
+    .map(byte => byte.toString(16).padStart(2, '0'))
+    .join('');
+
+  return evmAddress;
+}
+const currentAddress2 = () => {
+  return isEvmFormat.value
+    ? cosmosToEvmAddress(walletStore.currentAddress)
+    : walletStore.currentAddress;
+}
 
 
 </script>
@@ -16,9 +82,10 @@
           </div>
         </div>
         <div class="flex">
-          <div class="border-[#000014] py-3 px-6 border-1 cursor-pointer">
-            connect wallet
-          </div>
+          <label v-if="!walletStore?.currentAddress" for="PingConnectWallet"
+            class="border-[#000014] py-3 px-6 border-1 cursor-pointer">
+            <span class="ml-1 block">Connect Wallet</span>
+          </label>
         </div>
 
       </div>
