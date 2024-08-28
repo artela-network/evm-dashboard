@@ -12,12 +12,8 @@ module.exports = {
         secondary: 'var(--text-secondary)',
         active: 'var(--bg-active)',
       },
-      theme: {
-        extend: {
-          colors: {
-            primary: '#0000C9',
-          },
-        },
+      borderWidth: {
+        '1': '1px', // 添加自定义的 border-1 实用类
       },
     },
   },

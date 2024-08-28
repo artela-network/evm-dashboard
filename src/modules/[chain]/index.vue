@@ -18,8 +18,8 @@ import { computed } from '@vue/reactivity';
 import CardStatisticsVertical from '@/components/CardStatisticsVertical.vue';
 import ProposalListItem from '@/components/ProposalListItem.vue';
 import ArrayObjectElement from '@/components/dynamic/ArrayObjectElement.vue'
-import { bech32 } from 'bech32';
-
+import bech32 from 'bech32';
+console.log(bech32, '---000--'); // 这里应该打印出 bech32 对象
 const props = defineProps(['chain']);
 
 const blockchain = useBlockchain();
@@ -122,29 +122,25 @@ const amount = computed({
     quantity.value = val / ticker.value.converted_last.usd || 0
   }
 })
+
 function cosmosToEvmAddress(cosmosAddress: string): string {
-  // 检查地址长度和前缀
-  if (!cosmosAddress || cosmosAddress.length < 10 || !cosmosAddress.startsWith('art')) {
-    console.error('Invalid Cosmos address');
-    return ''; // 返回空字符串表示无效地址
+  // 检查 bech32 是否已正确导入
+  if (!cosmosAddress) {
+    return ''
   }
 
-  try {
-    // 解码 Bech32 地址
-    const decoded = bech32.decode(cosmosAddress);
-    const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
+  // 解码 Bech32 地址
+  const decoded = bech32.decode(cosmosAddress);
+  const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
 
-    // 将公钥哈希转换为 EVM 地址
-    const evmAddress = '0x' + Array.from(pubkeyHash)
-      .map(byte => byte.toString(16).padStart(2, '0'))
-      .join('');
+  // 将公钥哈希转换为 EVM 地址
+  const evmAddress = '0x' + Array.from(pubkeyHash)
+    .map(byte => byte.toString(16).padStart(2, '0'))
+    .join('');
 
-    return evmAddress;
-  } catch (error) {
-    console.error('Failed to decode address:', error);
-    return ''; // 返回空字符串表示解码失败
-  }
+  return evmAddress;
 }
+
 </script>
 
 <template>

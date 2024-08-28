@@ -48,7 +48,7 @@ onMounted(() => {
 });
 
 function updateState() {
-  walletStore.loadMyAsset()
+    walletStore.loadMyAsset()
 }
 async function fetchChange(blockWindow: number = 14400) {
     let page = 0;
@@ -196,41 +196,41 @@ const loadAvatar = (identity: string) => {
 
 // wallet box
 const change = computed(() => {
-  const token = walletStore.balanceOfStakingToken;
-  return token ? format.priceChanges(token.denom) : 0;
+    const token = walletStore.balanceOfStakingToken;
+    return token ? format.priceChanges(token.denom) : 0;
 });
 const color = computed(() => {
-  switch (true) {
-    case change.value > 0:
-      return 'text-green-600';
-    case change.value === 0:
-      return 'text-grey-500';
-    case change.value < 0:
-      return 'text-red-600';
-  }
+    switch (true) {
+        case change.value > 0:
+            return 'text-green-600';
+        case change.value === 0:
+            return 'text-grey-500';
+        case change.value < 0:
+            return 'text-red-600';
+    }
 });
 function cosmosToEvmAddress(cosmosAddress: string): string {
-  // 检查地址长度和前缀
-  if (!cosmosAddress || cosmosAddress.length < 10 || !cosmosAddress.startsWith('art')) {
-    console.error('Invalid Cosmos address');
-    return ''; // 返回空字符串表示无效地址
-  }
+    // 检查地址长度和前缀
+    if (!cosmosAddress || cosmosAddress.length < 10 || !cosmosAddress.startsWith('art')) {
+        console.error('Invalid Cosmos address');
+        return ''; // 返回空字符串表示无效地址
+    }
 
-  try {
-    // 解码 Bech32 地址
-    const decoded = bech32.decode(cosmosAddress);
-    const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
+    try {
+        // 解码 Bech32 地址
+        const decoded = bech32.decode(cosmosAddress);
+        const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
 
-    // 将公钥哈希转换为 EVM 地址
-    const evmAddress = '0x' + Array.from(pubkeyHash)
-      .map(byte => byte.toString(16).padStart(2, '0'))
-      .join('');
+        // 将公钥哈希转换为 EVM 地址
+        const evmAddress = '0x' + Array.from(pubkeyHash)
+            .map(byte => byte.toString(16).padStart(2, '0'))
+            .join('');
 
-    return evmAddress;
-  } catch (error) {
-    console.error('Failed to decode address:', error);
-    return ''; // 返回空字符串表示解码失败
-  }
+        return evmAddress;
+    } catch (error) {
+        console.error('Failed to decode address:', error);
+        return ''; // 返回空字符串表示解码失败
+    }
 }
 const loadAvatars = () => {
     // fetches all avatars from keybase and stores it in localStorage
@@ -273,98 +273,73 @@ loadAvatars();
 </script>
 <template>
     <div>
-        <!-- <div class="bg-base-100 rounded-lg grid sm:grid-cols-1 md:grid-cols-4 p-4" >    
-        <div class="flex">
-            <span>
-                <div class="relative w-9 h-9 rounded overflow-hidden flex items-center justify-center mr-2">
-                    <Icon class="text-success" icon="mdi:trending-up" size="32" />
-                    <div class="absolute top-0 left-0 bottom-0 right-0 opacity-20 bg-success"></div>
+        <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
+            <div class="w-[100px]">
+                <img src="../../../assets/page/staking.png" />
+            </div>
+            <div class="flex flex-col gap-2 justify-around py-5">
+                <div class="text-xl font-medium">
+                    Stake ART. Earn Rewards. Governance Artela
                 </div>
-            </span>
-            <span>
-                <div class="font-bold">{{ format.percent(mintStore.inflation) }}</div>
-                <div class="text-xs">{{ $t('staking.inflation') }}</div>
-            </span>
+                <div class="text-sm">
+                    Artela 每秒**区块，验证者打包交易验证区块，获得链上出块奖励。为验证者质押ART，可获得链上出块奖励，并获得投票权可用于参与 Artela 的链上治理
+                </div>
+            </div>
         </div>
-        <div class="flex">
-            <span>
-                <div class="relative w-9 h-9 rounded overflow-hidden flex items-center justify-center mr-2">
-                    <Icon class="text-primary" icon="mdi:lock-open-outline" size="32" />
-                    <div class="absolute top-0 left-0 bottom-0 right-0 opacity-20 bg-primary"></div>
-                </div>
-            </span>
-            <span>
-                <div class="font-bold">{{ formatSeconds(staking.params?.unbonding_time) }}</div>
-                <div class="text-xs">{{ $t('staking.unbonding_time') }}</div>
-            </span>
-        </div> 
-        <div class="flex">
-            <span>
-                <div class="relative w-9 h-9 rounded overflow-hidden flex items-center justify-center mr-2">
-                    <Icon class="text-error" icon="mdi:alert-octagon-outline" size="32" />
-                    <div class="absolute top-0 left-0 bottom-0 right-0 opacity-20 bg-error"></div>
-                </div>
-            </span>
-            <span>
-            <div class="font-bold">{{ format.percent(slashing.slash_fraction_double_sign) }}</div>
-            <div class="text-xs">{{ $t('staking.double_sign_slashing') }}</div>
-            </span>
-        </div> 
-        <div class="flex">
-            <span>
-                <div class="relative w-9 h-9 rounded overflow-hidden flex items-center justify-center mr-2">
-                    <Icon class="text-error" icon="mdi:pause" size="32" />
-                    <div class="absolute top-0 left-0 bottom-0 right-0 opacity-20 bg-error"></div>
-                </div>
-            </span>
-            <span>
-            <div class="font-bold">{{ format.percent(slashing.slash_fraction_downtime) }}</div>
-            <div class="text-xs">{{ $t('staking.downtime_slashing') }}</div>
-            </span>
-        </div>  
-    </div> -->
 
-        <div class="bg-base-100 rounded mt-4 shadow pt-6">
+        <div class="bg-base-100 rounded mt-4 shadow pt-4">
             <div class="text-lg font-medium px-4">
                 My Balance
             </div>
             <div class="grid grid-cols-1 md:!grid-cols-4 auto-cols-auto gap-4 px-4 pb-6 mt-4">
-                <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
-                    <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
-                    <div class="text-lg font-semibold text-main">
-                        {{ format.formatToken(walletStore.balanceOfStakingToken) }}
+                <div class="flex flex-row items-center">
+                    <div class="w-[44px]">
+                        <img src="../../../assets/page/logo1.svg" />
                     </div>
-                    <div class="text-sm" :class="color">
-                        ${{ format.tokenValue(walletStore.balanceOfStakingToken) }}
-                    </div>
-                </div>
-                <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
-                    <div class="text-sm mb-1">{{ $t('module.staking') }}</div>
-                    <div class="text-lg font-semibold text-main">
-                        {{ format.formatToken(walletStore.stakingAmount) }}
-                    </div>
-                    <div class="text-sm" :class="color">
-                        ${{ format.tokenValue(walletStore.stakingAmount) }}
+                    <div class="rounded-sm px-4 py-3">
+                        <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
+                        <div class="text-lg font-medium text-main">
+                            {{ format.formatToken(walletStore.balanceOfStakingToken) }}
+                        </div>
                     </div>
                 </div>
-                <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
-                    <div class="text-sm mb-1">{{ $t('index.reward') }}</div>
-                    <div class="text-lg font-semibold text-main">
-                        {{ format.formatToken(walletStore.rewardAmount) }}
+
+                <div class="flex flex-row items-center">
+                    <div class="w-[44px]">
+                        <img src="../../../assets/page/logo2.svg" />
                     </div>
-                    <div class="text-sm" :class="color">
-                        ${{ format.tokenValue(walletStore.rewardAmount) }}
-                    </div>
-                </div>
-                <div class="bg-gray-100 dark:bg-[#373f59] rounded-sm px-4 py-3">
-                    <div class="text-sm mb-1">{{ $t('index.unbonding') }}</div>
-                    <div class="text-lg font-semibold text-main">
-                        {{ format.formatToken(walletStore.unbondingAmount) }}
-                    </div>
-                    <div class="text-sm" :class="color">
-                        ${{ format.tokenValue(walletStore.unbondingAmount) }}
+                    <div class="rounded-sm px-4 py-3">
+                        <div class="text-sm mb-1">{{ $t('module.staking') }}</div>
+                        <div class="text-lg font-medium text-main">
+                            {{ format.formatToken(walletStore.stakingAmount) }}
+                        </div>
                     </div>
                 </div>
+
+                <div class="flex flex-row items-center">
+                    <div class="w-[44px]">
+                        <img src="../../../assets/page/logo3.svg" />
+                    </div>
+                    <div class="rounded-sm px-4 py-3">
+                        <div class="text-sm mb-1">{{ $t('index.reward') }}</div>
+                        <div class="text-lg font-medium text-main">
+                            {{ format.formatToken(walletStore.rewardAmount) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-row items-center">
+                    <div class="w-[44px]">
+                        <img src="../../../assets/page/logo4.svg" />
+                    </div>
+                    <div class="rounded-sm px-4 py-3">
+                        <div class="text-sm mb-1">{{ $t('index.unbonding') }}</div>
+                        <div class="text-lg font-medium text-main">
+                            {{ format.formatToken(walletStore.unbondingAmount) }}
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -418,9 +393,9 @@ loadAvatars();
                                             <div class="w-8 h-8 rounded-full bg-gray-400 absolute opacity-10"></div>
                                             <div class="w-8 h-8 rounded-full">
                                                 <img v-if="logo" :src="logo" class="object-contain" @error="(e) => {
-                                                        const identity = v.description?.identity;
-                                                        if (identity) loadAvatar(identity);
-                                                    }
+                                                    const identity = v.description?.identity;
+                                                    if (identity) loadAvatar(identity);
+                                                }
                                                     " />
                                                 <Icon v-else class="text-3xl" :icon="`mdi-help-circle-outline`" />
 
@@ -444,7 +419,7 @@ loadAvatars();
                                                 v.description?.website ||
                                                 v.description?.identity ||
                                                 '-'
-                                                }}</span>
+                                            }}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -472,7 +447,7 @@ loadAvatars();
                                                 v.delegator_shares,
                                                 staking.totalPower
                                             )
-                                            }}</span>
+                                        }}</span>
                                     </div>
                                 </td>
                                 <!-- 👉 24h Changes -->
