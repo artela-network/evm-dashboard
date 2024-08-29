@@ -343,14 +343,14 @@ loadAvatars();
             </div>
         </div>
 
-        <div>
-            <div class="flex items-center justify-between py-1">
+        <div class="mt-6">
+            <div class="flex items-center justify-between py-1 bg-[#E6F4FF] px-3">
                 <div class="tabs tabs-boxed bg-transparent">
-                    <a class="tab text-gray-400" :class="{ 'tab-active': tab === 'featured' }"
+                    <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'featured' }"
                         @click="tab = 'featured'">{{ $t('staking.popular') }}</a>
-                    <a class="tab text-gray-400" :class="{ 'tab-active': tab === 'active' }" @click="tab = 'active'">{{
+                    <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'active' }" @click="tab = 'active'">{{
                         $t('staking.active') }}</a>
-                    <a class="tab text-gray-400" :class="{ 'tab-active': tab === 'inactive' }"
+                    <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'inactive' }"
                         @click="tab = 'inactive'">{{ $t('staking.inactive') }}</a>
                 </div>
 
@@ -361,17 +361,17 @@ loadAvatars();
 
             <div class="bg-base-100 px-4 pt-3 pb-4 rounded shadow">
                 <div class="overflow-x-auto">
-                    <table class="table staking-table w-full">
-                        <thead class=" bg-base-200">
+                    <table class="text-[#00001499] w-full">
+                        <thead class="bg-base-100">
                             <tr>
-                                <th scope="col" class="uppercase" style="width: 3rem; position: relative">
+                                <th scope="col" class="uppercase font-normal" style="width: 3rem; position: relative">
                                     {{ $t('staking.rank') }}
                                 </th>
-                                <th scope="col" class="uppercase">{{ $t('staking.validator') }}</th>
-                                <th scope="col" class="text-right uppercase">{{ $t('staking.voting_power') }}</th>
-                                <th scope="col" class="text-right uppercase">{{ $t('staking.24h_changes') }}</th>
-                                <th scope="col" class="text-right uppercase">{{ $t('staking.commission') }}</th>
-                                <th scope="col" class="text-center uppercase">{{ $t('staking.actions') }}</th>
+                                <th scope="col" class="uppercase font-normal">{{ $t('staking.validator') }}</th>
+                                <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.voting_power') }}</th>
+                                <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.24h_changes') }}</th>
+                                <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.commission') }}</th>
+                                <th scope="col" class="text-center uppercase font-normal">{{ $t('staking.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -467,7 +467,7 @@ loadAvatars();
                                     <div v-if="v.jailed" class="badge badge-error gap-2 text-white">
                                         {{ $t('staking.jailed') }}
                                     </div>
-                                    <label v-else for="delegate" class="btn btn-xs btn-primary rounded-sm capitalize"
+                                    <label v-else for="delegate" class="btn btn-sm btn-primary text-[#0000C9] border-transparent bg-[#F1F5FF] rounded-sm capitalize"
                                         @click="
                                             dialog.open('delegate', {
                                                 validator_address:
