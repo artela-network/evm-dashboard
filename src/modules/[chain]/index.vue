@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import MdEditor from 'md-editor-v3';
 import PriceMarketChart from '@/components/charts/PriceMarketChart.vue';
+import List from "./account/component.vue"
 
 import { Icon } from '@iconify/vue';
 import {
@@ -18,7 +19,7 @@ import { computed } from '@vue/reactivity';
 import CardStatisticsVertical from '@/components/CardStatisticsVertical.vue';
 import ProposalListItem from '@/components/ProposalListItem.vue';
 import ArrayObjectElement from '@/components/dynamic/ArrayObjectElement.vue'
-import {bech32} from 'bech32';
+import { bech32 } from 'bech32';
 const props = defineProps(['chain']);
 
 const blockchain = useBlockchain();
@@ -168,8 +169,7 @@ const currentAddress2 = () => {
             <span class="text-[#000014B2] truncate text-sm underline underline-offset-1">
               {{ currentAddress2() || 'Not Connected' }}
             </span>
-            <div
-              v-if="walletStore.currentAddress"
+            <div v-if="walletStore.currentAddress"
               class="border-1 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
               @click="toggleAddressFormat">
               {{ addressFormat }}
@@ -221,7 +221,7 @@ const currentAddress2 = () => {
       </div>
     </div>
 
-    <div class="bg-base-100 mt-6 p-4">
+    <!-- <div class="bg-base-100 mt-6 p-4">
       <div class="text-lg font-medium">
         My Delegations
       </div>
@@ -242,8 +242,8 @@ const currentAddress2 = () => {
                   :to="`/${chain}/staking/${item?.delegation?.validator_address}`">
                   {{
                     format.validatorFromBech32(
-                      item?.delegation?.validator_address
-                    )
+                  item?.delegation?.validator_address
+                  )
                   }}
                 </RouterLink>
               </td>
@@ -252,10 +252,10 @@ const currentAddress2 = () => {
                 {{
                   format.formatTokens(
                     walletStore?.rewards?.rewards?.find(
-                      (el) =>
-                        el?.validator_address ===
-                        item?.delegation?.validator_address
-                    )?.reward)
+                (el) =>
+                el?.validator_address ===
+                item?.delegation?.validator_address
+                )?.reward)
                 }}
               </td>
               <td>
@@ -279,7 +279,8 @@ const currentAddress2 = () => {
         </table>
       </div>
 
-    </div>
+    </div> -->
+    <List :address="walletStore.currentAddress"/>
   </div>
 </template>
 
