@@ -9,7 +9,7 @@ import routes from "~pages";
 const additionalRoutes = [
   {
     path: '/',
-    redirect: '/Artela',
+    redirect: '/Artela/home',
   }
 ];
 

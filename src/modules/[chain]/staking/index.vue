@@ -369,7 +369,7 @@ loadAvatars();
                                 </th>
                                 <th scope="col" class="uppercase font-normal">{{ $t('staking.validator') }}</th>
                                 <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.voting_power') }}</th>
-                                <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.24h_changes') }}</th>
+                                <!-- <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.24h_changes') }}</th> -->
                                 <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.commission') }}</th>
                                 <th scope="col" class="text-center uppercase font-normal">{{ $t('staking.actions') }}</th>
                             </tr>
@@ -387,9 +387,9 @@ loadAvatars();
                                     </div>
                                 </td>
                                 <!-- 👉 Validator -->
-                                <td>
+                                <td class="flex">
                                     <div class="flex items-center overflow-hidden" style="max-width: 300px">
-                                        <div class="avatar mr-4 relative w-8 h-8 rounded-full">
+                                        <div class="avatar mr-4 ml-6 relative w-8 h-8 rounded-full">
                                             <div class="w-8 h-8 rounded-full bg-gray-400 absolute opacity-10"></div>
                                             <div class="w-8 h-8 rounded-full">
                                                 <img v-if="logo" :src="logo" class="object-contain" @error="(e) => {
@@ -451,9 +451,9 @@ loadAvatars();
                                     </div>
                                 </td>
                                 <!-- 👉 24h Changes -->
-                                <td class="text-right text-xs" :class="change24Color(v)">
+                                <!-- <td class="text-right text-xs" :class="change24Color(v)">
                                     {{ change24Text(v) }}
-                                </td>
+                                </td> -->
                                 <!-- 👉 commission -->
                                 <td class="text-right text-xs">
                                     {{

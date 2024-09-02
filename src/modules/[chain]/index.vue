@@ -169,6 +169,7 @@ const currentAddress2 = () => {
               {{ currentAddress2() || 'Not Connected' }}
             </span>
             <div
+              v-if="walletStore.currentAddress"
               class="border-1 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
               @click="toggleAddressFormat">
               {{ addressFormat }}
