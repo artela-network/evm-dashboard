@@ -109,7 +109,7 @@ dayjs()
                   '!bg-[#0000c9]': selected($route, el),
                 }" :to="el.to">
                 <!-- <img src="../../assets/nav/stak.svg" /> -->
-                <img :src="getIcon(el, $route)" />
+                <img :src="getIcon(el, $route)" class="w-6 h-6"/>
                 <div class="text-base capitalize text-gray-500 dark:text-gray-300" :class="{
                   '!text-white': selected($route, el),
                 }">

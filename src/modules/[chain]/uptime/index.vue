@@ -311,7 +311,8 @@ function changeTab(v: string) {
   {
     meta: {
       i18n: 'uptime',
-      order: 8
+      order: 8,
+      icon: 'uptime.svg'
     }
   }
 </route>
