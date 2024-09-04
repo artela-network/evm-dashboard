@@ -282,7 +282,9 @@ loadAvatars();
                     Maximize On-Chain Returns by Staking Your ART
                 </div>
                 <div class="text-sm">
-                    Maximize your returns through ART staking: lock in your tokens to earn stable and predictable rewards, with an annual yield of up to 7.2%. Additionally, gain voting rights to support the on-chain proposals you believe in. Tokens can be unlocked at any time.
+                    Maximize your returns through ART staking: lock in your tokens to earn stable and predictable
+                    rewards, with an annual yield of up to 7.2%. Additionally, gain voting rights to support the
+                    on-chain proposals you believe in. Tokens can be unlocked at any time.
                 </div>
             </div>
         </div>
@@ -348,8 +350,9 @@ loadAvatars();
                 <div class="tabs tabs-boxed bg-transparent">
                     <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'featured' }"
                         @click="tab = 'featured'">{{ $t('staking.popular') }}</a>
-                    <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'active' }" @click="tab = 'active'">{{
-                        $t('staking.active') }}</a>
+                    <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'active' }"
+                        @click="tab = 'active'">{{
+                            $t('staking.active') }}</a>
                     <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'inactive' }"
                         @click="tab = 'inactive'">{{ $t('staking.inactive') }}</a>
                 </div>
@@ -368,10 +371,18 @@ loadAvatars();
                                     {{ $t('staking.rank') }}
                                 </th>
                                 <th scope="col" class="uppercase font-normal">{{ $t('staking.validator') }}</th>
-                                <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.voting_power') }}</th>
+                                <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.voting_power')
+                                    }}</th>
                                 <!-- <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.24h_changes') }}</th> -->
-                                <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.commission') }}</th>
-                                <th scope="col" class="text-center uppercase font-normal">{{ $t('staking.actions') }}</th>
+                                <th scope="col" class="text-right uppercase font-normal flex justify-center items-center">
+                                    {{ $t('staking.commission') }}
+                                    <button class="tooltip tooltip-bottom"
+                                        data-tip="The validator's fee rate will be applied; your effective yield = annual yield * (1 - commission).">
+                                        <img src="../../../assets/tip.svg" />
+                                    </button>
+                                </th>
+                                <th scope="col" class="text-center uppercase font-normal">{{ $t('staking.actions') }}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -419,7 +430,7 @@ loadAvatars();
                                                 v.description?.website ||
                                                 v.description?.identity ||
                                                 '-'
-                                            }}</span>
+                                                }}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -467,7 +478,8 @@ loadAvatars();
                                     <div v-if="v.jailed" class="badge badge-error gap-2 text-white">
                                         {{ $t('staking.jailed') }}
                                     </div>
-                                    <label v-else for="delegate" class="btn btn-sm btn-primary text-[#0000C9] border-transparent bg-[#F1F5FF] rounded-sm capitalize"
+                                    <label v-else for="delegate"
+                                        class="btn btn-sm btn-primary text-[#0000C9] border-transparent bg-[#F1F5FF] rounded-sm capitalize"
                                         @click="
                                             dialog.open('delegate', {
                                                 validator_address:

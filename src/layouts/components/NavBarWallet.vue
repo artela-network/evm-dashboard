@@ -73,7 +73,7 @@ const currentAddress2 = () => {
   <div class="dropdown dropdown-hover dropdown-end">
     <img src="../../assets/header/wallet.svg" />
 
-    <div tabindex="0" class="dropdown-content menu shadow p-2 bg-base-100 rounded w-52 md:!w-64 overflow-auto">
+    <div tabindex="0" class="dropdown-content menu shadow p-2 bg-base-100 rounded w-52 md:!w-64">
       <label v-if="!walletStore?.currentAddress" for="PingConnectWallet" class="btn btn-sm btn-primary">
         <Icon icon="mdi:wallet" /><span class="ml-1 block">Connect Wallet</span>
       </label>
@@ -86,20 +86,23 @@ const currentAddress2 = () => {
           style="overflow-wrap: anywhere" @click="copyAdress(currentAddress2())">
           {{ currentAddress2() }}
         </a>
-        <div class="flex" v-if="walletStore.currentAddress">
+        <div class="flex gap-2 items-center" v-if="walletStore.currentAddress">
           <div
-            class="border-1 py-1 ml-2 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
+            class="border-1 py-1 ml-2 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[12px] border-black"
             @click="toggleAddressFormat">
             {{ addressFormat }}
             <img src="../../assets/page/switch.svg" />
           </div>
+          <button class="tooltip" data-tip="At Artela, everyone has the opportunity to participate in on-chain governance. By staking, you earn voting rights. Use your voting power to vote for the proposals you believe in and contribute to a stronger, more secure blockchain ecosystem.">
+            <img src="../../assets/tip.svg" />
+          </button>
         </div>
         <div v-if="walletStore.currentAddress" class="divider mt-1 mb-1"></div>
         <a v-if="walletStore.currentAddress"
           class="block py-2 px-2 hover:bg-gray-100 text-[#ED4E00] dark:hover:bg-[#353f5a] rounded cursor-pointer"
           @click="walletStore.disconnect()">Disconnect</a>
       </div>
-    </div> 
+    </div>
     <div class="toast" v-show="showCopyToast === 1">
       <div class="alert alert-success">
         <div class="text-xs md:!text-sm">
