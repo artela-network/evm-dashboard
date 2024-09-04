@@ -33,15 +33,17 @@ function page(p: number) {
 <template>
     <div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
-            <div class="w-[100px]">
+            <div class="w-[100px] flex-shrink-0">
                 <img src="../../../assets/page/gov.png" />
             </div>
             <div class="flex flex-col gap-2 justify-around py-5">
                 <div class="text-xl font-medium">
-                    Review proposals and vote
+                    Vote for Proposals You Support and Participate in Artela's Governance
                 </div>
                 <div class="text-sm">
-                    在 Artela ，人人均可参与链上治理。当你参与质押后，便会获得投票权。使用你的投票权，为你认同的提案投票吧！
+                    At Artela, everyone has the opportunity to participate in on-chain governance. By staking, you earn
+                    voting rights. Use your voting power to vote for the proposals you believe in and contribute to a
+                    stronger, more secure blockchain ecosystem.
                 </div>
             </div>
         </div>

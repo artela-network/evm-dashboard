@@ -274,15 +274,15 @@ loadAvatars();
 <template>
     <div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
-            <div class="w-[100px]">
+            <div class="w-[100px] flex-shrink-0">
                 <img src="../../../assets/page/staking.png" />
             </div>
             <div class="flex flex-col gap-2 justify-around py-5">
                 <div class="text-xl font-medium">
-                    Stake ART. Earn Rewards. Governance Artela
+                    Maximize On-Chain Returns by Staking Your ART
                 </div>
                 <div class="text-sm">
-                    Artela 每秒**区块，验证者打包交易验证区块，获得链上出块奖励。为验证者质押ART，可获得链上出块奖励，并获得投票权可用于参与 Artela 的链上治理
+                    Maximize your returns through ART staking: lock in your tokens to earn stable and predictable rewards, with an annual yield of up to 7.2%. Additionally, gain voting rights to support the on-chain proposals you believe in. Tokens can be unlocked at any time.
                 </div>
             </div>
         </div>
