@@ -96,7 +96,7 @@ const currentAddress2 = () => {
               class="border-1 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
               @click="toggleAddressFormat">
               {{ addressFormat }}
-              <img src="../../assets/page/switch.svg" />
+              <img src="../../../assets/assets/page/switch.svg" />
             </div>
           </div>
         </div>
