@@ -165,16 +165,22 @@ const currentAddress2 = () => {
           <div class="text-lg font-medium">
             Current Address
           </div>
-          <div class="flex flex-row w-full gap-4">
+          <div class="flex flex-row w-full gap-4" v-if="walletStore.currentAddress">
             <span class="text-[#000014B2] truncate text-sm underline underline-offset-1">
               {{ currentAddress2() || 'Not Connected' }}
             </span>
-            <div v-if="walletStore.currentAddress"
+            <div
               class="border-1 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
               @click="toggleAddressFormat">
               {{ addressFormat }}
               <img src="../../assets/page/switch.svg" />
             </div>
+          </div>
+          <div class="flex" v-else>
+            <label v-if="!walletStore?.currentAddress" for="PingConnectWallet"
+              class="border-[#000014] py-0 px-3 border-1 cursor-pointer font-medium">
+              <span class="ml-1 block">Connect Wallet</span>
+            </label>
           </div>
         </div>
         <RouterLink v-if="walletStore.currentAddress"
@@ -280,7 +286,7 @@ const currentAddress2 = () => {
       </div>
 
     </div> -->
-    <List :address="walletStore.currentAddress"/>
+    <List :address="walletStore.currentAddress" />
   </div>
 </template>
 

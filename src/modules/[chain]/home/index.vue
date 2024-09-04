@@ -73,12 +73,14 @@ const currentAddress2 = () => {
   <div class="flex flex-col gap-4">
     <div class="flex bg-white px-6 py-8">
       <div class="flex flex-col gap-4 justify-around">
-        <div>
-          <div class="text-[28px] font-medium">
-            Stake ART. Earn Rewards. Governance Artela
+        <div class="flex flex-col gap-3">
+          <div class="text-[28px] font-medium leading-8">
+            Stake ART on Artela to Earn Rewards and Participate in Governance
           </div>
           <div class="text-sm">
-            Artela 网络采取 POS 共识机制，用户可以通过为节点验证者质押 ART，获得最高年化 7.2% 的链上奖励，并可参与治理 Artela
+            The Artela network hosts numerous node validators, allowing users to stake ART with these validators to earn
+            on-chain rewards. By staking, users also gain voting rights, enabling them to vote on on-chain proposals and
+            actively participate in the governance of Artela.
           </div>
         </div>
         <div class="flex">
@@ -86,10 +88,21 @@ const currentAddress2 = () => {
             class="border-[#000014] py-3 px-6 border-1 cursor-pointer">
             <span class="ml-1 block">Connect Wallet</span>
           </label>
+          <div class="flex flex-row w-full gap-4" v-else>
+            <span class="text-[#000014B2] truncate text-sm underline underline-offset-1">
+              {{ currentAddress2() || 'Not Connected' }}
+            </span>
+            <div
+              class="border-1 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
+              @click="toggleAddressFormat">
+              {{ addressFormat }}
+              <img src="../../assets/page/switch.svg" />
+            </div>
+          </div>
         </div>
 
       </div>
-      <div class="w-[383px]">
+      <div class="w-[383px] flex-shrink-0">
         <img src="../../../assets//home/home.png" />
       </div>
     </div>
