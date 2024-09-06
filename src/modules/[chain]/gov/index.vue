@@ -46,6 +46,9 @@ function page(p: number) {
                     stronger, more secure blockchain ecosystem.
                 </div>
             </div>
+            <div class="text-[#0000c9] cursor-pointer">
+                More
+            </div>
         </div>
         <div class="tabs bg-[#E6F4FF] text-center mt-4">
             <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '2' }" @click="changeTab('2')">{{

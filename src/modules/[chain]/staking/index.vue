@@ -287,6 +287,9 @@ loadAvatars();
                     on-chain proposals you believe in. Tokens can be unlocked at any time.
                 </div>
             </div>
+            <div class="text-[#0000c9] cursor-pointer">
+                More
+            </div>
         </div>
 
         <div class="bg-base-100 rounded mt-4 shadow pt-4">

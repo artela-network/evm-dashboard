@@ -32,7 +32,7 @@ const paramStore = useParamStore()
 const coinInfo = computed(() => {
   return store.coinInfo;
 });
-
+console.log(store.stats,'--==--00--')
 const isEvmFormat = ref(true);
 // Computed property to determine the button text
 const addressFormat = computed(() => (isEvmFormat.value ? 'EVM' : 'Cosmos'));
@@ -187,14 +187,11 @@ const currentAddress2 = () => {
           class="float-right text-sm cursor-pointert link link-primary no-underline font-medium"
           :to="`/${chain}/account/${walletStore.currentAddress}`">{{ $t('index.more') }}</RouterLink>
       </div>
-      <div class="grid grid-cols-1 md:!grid-cols-4 auto-cols-auto gap-4 px-4 pb-6 mt-3">
+      <div class="grid grid-cols-1 md:!grid-cols-5 auto-cols-auto gap-4 px-4 pb-6 mt-3">
         <div class="bg-[#E2E6FF] dark:bg-[#373f59] rounded-sm px-4 py-3">
           <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
           <div class="text-lg font-semibold text-main">
             {{ format.formatToken(walletStore.balanceOfStakingToken) }}
-          </div>
-          <div class="text-sm" :class="color">
-            ${{ format.tokenValue(walletStore.balanceOfStakingToken) }}
           </div>
         </div>
         <div class="bg-[#FFF4DE] dark:bg-[#373f59] rounded-sm px-4 py-3">
@@ -202,17 +199,11 @@ const currentAddress2 = () => {
           <div class="text-lg font-semibold text-main">
             {{ format.formatToken(walletStore.stakingAmount) }}
           </div>
-          <div class="text-sm" :class="color">
-            ${{ format.tokenValue(walletStore.stakingAmount) }}
-          </div>
         </div>
         <div class="bg-[#DCFCE7] dark:bg-[#373f59] rounded-sm px-4 py-3">
           <div class="text-sm mb-1">{{ $t('index.reward') }}</div>
           <div class="text-lg font-semibold text-main">
             {{ format.formatToken(walletStore.rewardAmount) }}
-          </div>
-          <div class="text-sm" :class="color">
-            ${{ format.tokenValue(walletStore.rewardAmount) }}
           </div>
         </div>
         <div class="bg-[#FFE2E5] dark:bg-[#373f59] rounded-sm px-4 py-3">
@@ -220,8 +211,11 @@ const currentAddress2 = () => {
           <div class="text-lg font-semibold text-main">
             {{ format.formatToken(walletStore.unbondingAmount) }}
           </div>
-          <div class="text-sm" :class="color">
-            ${{ format.tokenValue(walletStore.unbondingAmount) }}
+        </div>
+        <div class="bg-[#fae4e4] dark:bg-[#373f59] rounded-sm px-4 py-3">
+          <div class="text-sm mb-1">Current Inflation</div>
+          <div class="text-lg font-semibold text-main">
+            {{ store.stats[4].stats }}
           </div>
         </div>
       </div>
