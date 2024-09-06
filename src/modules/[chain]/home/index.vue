@@ -88,17 +88,27 @@ const currentAddress2 = () => {
             class="border-[#000014] py-3 px-6 border-1 cursor-pointer">
             <span class="ml-1 block">Connect Wallet</span>
           </label>
-          <div class="flex flex-row w-full gap-4" v-else>
-            <span class="text-[#000014B2] truncate text-sm underline underline-offset-1">
-              {{ currentAddress2() || 'Not Connected' }}
-            </span>
-            <div
-              class="border-1 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
-              @click="toggleAddressFormat">
-              {{ addressFormat }}
-              <img src="../../../assets/page/switch.svg" />
+          <div class="flex flex-col gap-3" v-else>
+            <div class="text-xl font-medium">
+              Current Address
+            </div>
+            <div class="flex flex-row w-full gap-1">
+              <span class="text-[#000014B2] truncate text-sm underline underline-offset-1">
+                {{ currentAddress2() || 'Not Connected' }}
+              </span>
+              <div
+                class="border-1 ml-2 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
+                @click="toggleAddressFormat">
+                {{ addressFormat }}
+                <img src="../../../assets/page/switch.svg" />
+              </div>
+              <button class="tooltip"
+                data-tip="Artela's native address is in EVM format, but when participating in on-chain governance, your address will automatically convert to Cosmos format. You can freely switch the display format of your address here. Note: During on-chain governance, all addresses in transactions will be shown in Cosmos format.">
+                <img src="../../../assets/tip.svg" />
+              </button>
             </div>
           </div>
+
         </div>
 
       </div>
@@ -112,7 +122,7 @@ const currentAddress2 = () => {
           Participate in Governance
         </div>
         <div class="text-sm">
-          Earn Staking Rewards and Voting Rights
+          Earn staking rewards and voting rights
         </div>
       </div>
 

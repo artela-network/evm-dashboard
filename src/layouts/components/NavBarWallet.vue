@@ -93,7 +93,7 @@ const currentAddress2 = () => {
             {{ addressFormat }}
             <img src="../../assets/page/switch.svg" />
           </div>
-          <button class="tooltip" data-tip="At Artela, everyone has the opportunity to participate in on-chain governance. By staking, you earn voting rights. Use your voting power to vote for the proposals you believe in and contribute to a stronger, more secure blockchain ecosystem.">
+          <button class="tooltip" data-tip="Artela's native address is in EVM format, but when participating in on-chain governance, your address will automatically convert to Cosmos format. You can freely switch the display format of your address here. Note: During on-chain governance, all addresses in transactions will be shown in Cosmos format.">
             <img src="../../assets/tip.svg" />
           </button>
         </div>

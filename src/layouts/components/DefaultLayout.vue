@@ -150,7 +150,7 @@ dayjs()
         <div class="flex-1 w-0"></div>
 
         <!-- <NavSearchBar />-->
-        <NavbarThemeSwitcher class="!inline-block" />
+        <!-- <NavbarThemeSwitcher class="!inline-block" /> -->
         <NavBarWallet />
       </div>
 
