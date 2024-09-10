@@ -12,7 +12,7 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@artela/wallet-widget": "0.1.22",
+    "@artela/wallet-widget": "0.1.25",
     "@chenfengyuan/vue-countdown": "2",
     "@cosmjs/amino": "^0.32.3",
     "@cosmjs/crypto": "^0.32.3",
@@ -32,6 +32,7 @@
     "apexcharts": "^3.37.1",
     "autoprefixer": "^10.4.14",
     "axios": "^1.3.2",
+    "bech32": "^2.0.0",
     "buffer": "^6.0.3",
     "build": "^0.1.4",
     "cross-fetch": "^3.1.5",

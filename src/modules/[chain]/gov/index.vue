@@ -32,21 +32,42 @@ function page(p: number) {
 </script>
 <template>
     <div>
-        <div class="tabs tabs-boxed bg-transparent mb-4 text-center">
-            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '2' }" @click="changeTab('2')">{{ $t('gov.voting') }}</a>
-            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '3' }" @click="changeTab('3')">{{ $t('gov.passed') }}</a>
-            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '4' }"
-                @click="changeTab('4')">{{ $t('gov.rejected') }}</a>
+        <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
+            <div class="w-[100px] flex-shrink-0">
+                <img src="../../../assets/page/gov.png" />
+            </div>
+            <div class="flex flex-col gap-2 justify-around py-5">
+                <div class="text-xl font-medium">
+                    Vote for Proposals You Support and Participate in Artela's Governance
+                </div>
+                <div class="text-sm">
+                    At Artela, everyone has the opportunity to participate in on-chain governance. By staking, you earn
+                    voting rights. Use your voting power to vote for the proposals you believe in and contribute to a
+                    stronger, more secure blockchain ecosystem.
+                </div>
+            </div>
+            <div class="text-[#0000c9] cursor-pointer">
+                More
+            </div>
+        </div>
+        <div class="tabs bg-[#E6F4FF] text-center mt-4">
+            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '2' }" @click="changeTab('2')">{{
+                $t('gov.voting') }}</a>
+            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '3' }" @click="changeTab('3')">{{
+                $t('gov.passed') }}</a>
+            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '4' }" @click="changeTab('4')">{{
+                $t('gov.rejected') }}</a>
         </div>
         <ProposalListItem :proposals="store?.proposals[tab]" />
         <PaginationBar :total="store?.proposals[tab]?.pagination?.total" :limit="pageRequest.limit" :callback="page" />
     </div>
 </template>
 <route>
-  {
-    meta: {
-      i18n: 'governance',
-      order: 2
+    {
+      meta: {
+        i18n: 'governance',
+        order: 3,
+        icon: 'gov.svg'
+      }
     }
-  }
-</route>
+  </route>

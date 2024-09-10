@@ -27,16 +27,16 @@ function search() {
 </script>
 <template>
     <div>
-        <div class="tabs tabs-boxed bg-transparent mb-4">
-            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === 'recent' }"
+        <div class="tabs bg-[#E6F4FF] p-3">
+            <a class="tab rounded text-gray-400 uppercase" :class="{ 'bg-[#0000C9] text-white': tab === 'recent' }"
                 @click="tab = 'recent'">{{ $t('block.recent') }}</a>
-            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === 'search' }"
+            <a class="tab rounded text-gray-400 uppercase" :class="{ 'bg-[#0000C9] text-white': tab === 'search' }"
                 @click="tab = 'search'">Search</a>
         </div>
 
         <div v-show="tab === 'recent'" class="bg-base-100 rounded overflow-x-auto">
-            <table class="table w-full table-compact">
-                <thead class="bg-base-200">
+            <table class="table w-full">
+                <thead class="bg-base-100">
                     <tr>
                         <th style="position: relative; z-index: 2;">{{ $t('account.height') }}</th>
                         <th style="position: relative; z-index: 2;">{{ $t('account.hash') }}</th>
@@ -88,7 +88,8 @@ function search() {
     {
       meta: {
         i18n: 'tx',
-        order: 5
+        order: 5,
+        icon: 'tx.svg'
       }
     }
   </route>

@@ -66,4 +66,7 @@ export default defineConfig({
   optimizeDeps: {
     entries: ['./src/**/*.vue'],
   },
+  server: {
+    port: 4000, // 设置开发服务器端口号为4000
+  },
 });

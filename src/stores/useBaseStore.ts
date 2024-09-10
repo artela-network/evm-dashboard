@@ -13,7 +13,7 @@ export const useBaseStore = defineStore('baseStore', {
             earlest: {} as Block,
             latest: {} as Block,
             recents: [] as Block[],
-            theme: (window.localStorage.getItem('theme') || 'dark') as
+            theme: (window.localStorage.getItem('theme') || 'light') as
                 | 'light'
                 | 'dark',
             connected: true,

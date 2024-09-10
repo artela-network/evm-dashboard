@@ -11,7 +11,10 @@ module.exports = {
         main: 'var(--text-main)',
         secondary: 'var(--text-secondary)',
         active: 'var(--bg-active)',
-      }
+      },
+      borderWidth: {
+        '1': '1px', // 添加自定义的 border-1 实用类
+      },
     },
   },
   plugins: [require('daisyui')],
