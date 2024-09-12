@@ -1,6 +1,6 @@
 {
     "chain_name": "Artela",
-    "chain_id": "artela_11820-1",
+    "chain_id": "artela_11822-1",
     "coingecko": "",
     "api": ["https://test-api.artela.network/"],
     "rpc": ["https://test-api.artela.network/"],
