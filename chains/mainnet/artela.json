@@ -1,9 +1,9 @@
 {
     "chain_name": "Artela",
-    "chain_id": "artela_11822-1",
+    "chain_id": "artela_11820-1",
     "coingecko": "",
-    "api": ["https://test-api.artela.network/"],
-    "rpc": ["https://test-api.artela.network/"],
+    "api": ["https://api.artela.network/"],
+    "rpc": ["https://api.artela.network/"],
     "sdk_version": "0.47.4",
     "coin_type": "60",
     "min_tx_fee": "80000000000",
