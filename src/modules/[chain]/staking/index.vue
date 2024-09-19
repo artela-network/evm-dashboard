@@ -8,8 +8,7 @@ import {
     useWalletStore,
     useTxDialog,
 } from '@/stores';
-import { computed } from '@vue/reactivity';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 import type { Key, SlashingParam, Validator } from '@/types';
 import { formatSeconds } from '@/libs/utils'
@@ -34,18 +33,56 @@ const yesterday = ref({} as Record<string, number>);
 const tab = ref('active');
 const unbondList = ref([] as Validator[]);
 const slashing = ref({} as SlashingParam)
+const isDataLoaded = ref(false);
 
-onMounted(() => {
-    staking.fetchUnbondingValdiators().then((res) => {
-        unbondList.value = res.concat(unbondList.value);
-    });
-    staking.fetchInacitveValdiators().then((res) => {
-        unbondList.value = unbondList.value.concat(res);
-    });
-    chainStore.rpc.getSlashingParams().then(res => {
-        slashing.value = res.params
-    })
+onMounted(async () => {
+    try {
+        await Promise.all([
+            staking.fetchUnbondingValdiators().then((res) => {
+                unbondList.value = res.concat(unbondList.value);
+            }),
+            staking.fetchInacitveValdiators().then((res) => {
+                unbondList.value = unbondList.value.concat(res);
+            }),
+            chainStore.rpc.getSlashingParams().then(res => {
+                slashing.value = res.params
+            }),
+            walletStore.loadMyAsset()
+        ]);
+        isDataLoaded.value = true;
+    } catch (error) {
+        console.error("Error loading data:", error);
+    }
 });
+
+watch(() => chainStore.chainName, async (newChain, oldChain) => {
+    if (newChain !== oldChain) {
+        isDataLoaded.value = false;
+        // 重新加载数据
+        // 可以调用一个包含所有加载逻辑的函数
+        await loadAllData();
+        isDataLoaded.value = true;
+    }
+});
+
+async function loadAllData() {
+    try {
+        await Promise.all([
+            staking.fetchUnbondingValdiators().then((res) => {
+                unbondList.value = res.concat(unbondList.value);
+            }),
+            staking.fetchInacitveValdiators().then((res) => {
+                unbondList.value = unbondList.value.concat(res);
+            }),
+            chainStore.rpc.getSlashingParams().then(res => {
+                slashing.value = res.params
+            }),
+            walletStore.loadMyAsset()
+        ]);
+    } catch (error) {
+        console.error("Error loading data:", error);
+    }
+}
 
 function updateState() {
     walletStore.loadMyAsset()
@@ -272,7 +309,7 @@ base.$subscribe((_, s) => {
 loadAvatars();
 </script>
 <template>
-    <div>
+    <div v-if="isDataLoaded">
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
             <div class="w-[100px] flex-shrink-0">
                 <img src="../../../assets/page/staking.png" />
@@ -511,6 +548,10 @@ loadAvatars();
                 </div>
             </div>
         </div>
+    </div>
+    <div v-else>
+        <!-- 加载指示器或占位符 -->
+        Loading staking data...
     </div>
 </template>
 
