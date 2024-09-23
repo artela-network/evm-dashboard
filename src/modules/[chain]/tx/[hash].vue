@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import { useBaseStore, useBlockchain, useFormatter } from '@/stores';
 import DynamicComponent from '@/components/dynamic/DynamicComponent.vue';
-import { computed, ref } from '@vue/reactivity';
+import { computed, ref, watch } from 'vue';
 import type { Tx, TxResponse } from '@/types';
 
-import { JsonViewer } from "vue3-json-viewer"
-// if you used v1.0.5 or latster ,you should add import "vue3-json-viewer/dist/index.css"
-import "vue3-json-viewer/dist/index.css";
+import VueJsonPretty from 'vue-json-pretty';
+import 'vue-json-pretty/lib/styles.css';
 
 const props = defineProps(['hash', 'chain']);
 
@@ -31,6 +30,19 @@ const messages = computed(() => {
         return x
     }) || [];
 });
+
+const jsonTheme = computed(() => {
+    return baseStore.theme === 'dark' ? 'dark' : 'light';
+});
+
+const copyJsonToClipboard = () => {
+    const jsonString = JSON.stringify(tx.value, null, 2);
+    navigator.clipboard.writeText(jsonString).then(() => {
+        alert('JSON copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy JSON: ', err);
+    });
+};
 </script>
 <template>
     <div>
@@ -121,10 +133,21 @@ const messages = computed(() => {
             </div>
             <div v-if="messages.length === 0">{{ $t('tx.no_messages') }}</div>
         </div>
-
         <div v-if="tx.tx_response" class="bg-base-100 px-4 pt-3 pb-4 rounded shadow">
-            <h2 class="card-title truncate mb-2">JSON</h2>
-            <JsonViewer :value="tx" :theme="baseStore.theme" style="background: transparent;" copyable boxed sort expand-depth="5"/>
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="card-title truncate">JSON</h2>
+                <button @click="copyJsonToClipboard" class="btn btn-sm btn-primary">Copy JSON</button>
+            </div>
+            <div class="json-viewer-container" style="max-height: 500px; overflow-y: auto;">
+                <VueJsonPretty
+                    :data="tx"
+                    :deep="1"
+                    :show-double-quotes="true"
+                    :show-length="true"
+                    :show-line="true"
+                    :theme="jsonTheme"
+                />
+            </div>
         </div>
     </div>
 </template>
