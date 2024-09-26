@@ -288,7 +288,7 @@ const currentAddress2 = () => {
   {
     meta: {
       i18n: 'dashboard',
-      order: 5,
+      order: 1,
       icon: 'wallet.svg'
     }
   }
