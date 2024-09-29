@@ -76,7 +76,12 @@ const behind = computed(() => {
 });
 
 dayjs()
-
+const FAQClick = () => {
+  window.open('https://renaissance.artela.network/vision/FAQ', '_blank')
+}
+const NetworkClick = () => {
+  window.open('https://betanet-scan.artela.network/', '_blank')
+}
 </script>
 
 <template>
@@ -152,6 +157,12 @@ dayjs()
 
           <!-- <NavSearchBar />-->
           <!-- <NavbarThemeSwitcher class="!inline-block" /> -->
+          <div class="cursor-pointer hover:text-blue-500 mr-4 text-lg" @click="">
+            FAQ
+          </div>
+          <div class="cursor-pointer hover:text-blue-500 w-8 mr-4" @click="">
+            <img src="../../assets/header/network.svg" />
+          </div>
           <NavBarWallet />
         </div>
 
