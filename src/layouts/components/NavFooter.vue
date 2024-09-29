@@ -57,15 +57,6 @@
         <!-- ... (mobile version content) ... -->
       </div>
       
-      <!-- Newsletter subscription -->
-      <div class="w-full sm:w-1/4 flex flex-col gap-6 sm:mt-0 mt-8">
-        <h3 class="font-bold flex justify-start gap-2">
-          <!-- <img :src="require('@/assets/common/wifi.svg')" alt="" /> -->
-          Join our newsletter
-        </h3>
-        <!-- <EmailSubscription /> -->
-      </div>
-      
       <p class="sm:hidden mt-10 text-[#4d4d4d]">© Artela Inc. All Rights Reserved.</p>
     </div>
   </footer>
