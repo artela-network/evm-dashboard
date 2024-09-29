@@ -65,6 +65,12 @@ watch(() => chainStore.chainName, async (newChain, oldChain) => {
     }
 });
 
+watch(() => walletStore.currentAddress, async (newAddress, oldAddress) => {
+    if (newAddress !== oldAddress) {
+        await walletStore.loadMyAsset();
+    }
+});
+
 async function loadAllData() {
     try {
         await Promise.all([
@@ -345,7 +351,7 @@ loadAvatars();
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ format.formatToken(walletStore.balanceOfStakingToken) }}
+                            {{ walletStore.balanceOfStakingToken && walletStore.balanceOfStakingToken.amount !== '0' ? format.formatToken(walletStore.balanceOfStakingToken) : '--' }}
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@ import {
   useStakingStore,
   useParamStore,
 } from '@/stores';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useIndexModule, colorMap } from './indexStore';
 import { computed } from '@vue/reactivity';
 
@@ -150,11 +150,18 @@ function cosmosToEvmAddress(cosmosAddress: string): string {
 
   return evmAddress;
 }
-const currentAddress2 = () => {
+const currentAddress2 = computed(() => {
   return isEvmFormat.value
     ? cosmosToEvmAddress(walletStore.currentAddress)
     : walletStore.currentAddress;
-}
+})
+
+// Watch for changes in currentAddress2
+watch(currentAddress2, (newAddress, oldAddress) => {
+  if (newAddress !== oldAddress) {
+    walletStore.loadMyAsset();
+  }
+});
 </script>
 
 <template>
@@ -167,7 +174,7 @@ const currentAddress2 = () => {
           </div>
           <div class="flex flex-row w-full gap-4" v-if="walletStore.currentAddress">
             <span class="text-[#000014B2] truncate text-sm underline underline-offset-1">
-              {{ currentAddress2() || 'Not Connected' }}
+              {{ currentAddress2 || 'Not Connected' }}
             </span>
             <div
               class="border-1 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
@@ -191,7 +198,7 @@ const currentAddress2 = () => {
         <div class="bg-[#E2E6FF] dark:bg-[#373f59] rounded-sm px-4 py-3">
           <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
           <div class="text-lg font-semibold text-main">
-            {{ format.formatToken(walletStore.balanceOfStakingToken) }}
+            {{ walletStore.balanceOfStakingToken && walletStore.balanceOfStakingToken.amount !== '0' ? format.formatToken(walletStore.balanceOfStakingToken) : '--' }}
           </div>
         </div>
         <div class="bg-[#FFF4DE] dark:bg-[#373f59] rounded-sm px-4 py-3">
