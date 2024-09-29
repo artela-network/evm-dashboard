@@ -306,6 +306,10 @@ base.$subscribe((_, s) => {
     }
 });
 
+const openLink = () => {
+    window.open('https://docs.artela.network/develop/validate/Delegators', '_blank');
+}
+
 loadAvatars();
 </script>
 <template>
@@ -324,7 +328,7 @@ loadAvatars();
                     on-chain proposals you believe in. Tokens can be unlocked at any time.
                 </div>
             </div>
-            <div class="text-[#0000c9] cursor-pointer">
+            <div class="text-[#0000c9] cursor-pointer" @click="openLink">
                 More
             </div>
         </div>
@@ -414,7 +418,8 @@ loadAvatars();
                                 <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.voting_power')
                                     }}</th>
                                 <!-- <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.24h_changes') }}</th> -->
-                                <th scope="col" class="text-right uppercase font-normal flex justify-center items-center">
+                                <th scope="col"
+                                    class="text-right uppercase font-normal flex justify-center items-center">
                                     {{ $t('staking.commission') }}
                                     <button class="tooltip tooltip-bottom"
                                         data-tip="The validator's fee rate will be applied; your effective yield = annual yield * (1 - commission).">
@@ -470,7 +475,7 @@ loadAvatars();
                                                 v.description?.website ||
                                                 v.description?.identity ||
                                                 '-'
-                                                }}</span>
+                                            }}</span>
                                         </div>
                                     </div>
                                 </td>

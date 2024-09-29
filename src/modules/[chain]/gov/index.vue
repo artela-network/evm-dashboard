@@ -29,6 +29,9 @@ function page(p: number) {
     store.fetchProposals(tab.value, pageRequest.value)
 }
 
+const openLink = () => {
+    window.open('https://docs.artela.network/develop/validate/ReferenceD', '_blank');
+}
 </script>
 <template>
     <div>
@@ -46,7 +49,9 @@ function page(p: number) {
                     stronger, more secure blockchain ecosystem.
                 </div>
             </div>
-            <div class="text-[#0000c9] cursor-pointer">
+            <div class="text-[#0000c9] cursor-pointer"
+                @click="openLink"
+            >
                 More
             </div>
         </div>
