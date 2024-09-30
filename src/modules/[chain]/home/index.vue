@@ -66,10 +66,10 @@ const currentAddress2 = () => {
 
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex flex-col md:!flex-row xl:flex-row bg-white px-4 md:px-6 xl:px-6 py-6 md:py-8 xl:py-8">
+    <div class="flex flex-col md:!flex-row bg-white px-4 md:!px-6 py-6 md:!py-8">
       <div class="flex flex-col gap-4 justify-around">
         <div class="flex flex-col gap-3">
-          <div class="text-2xl md:text-[28px] xl:text-[28px] font-medium leading-8">
+          <div class="text-2xl md:!text-[28px] font-medium leading-8">
             Stake ART on Artela to Earn Rewards and Participate in Governance
           </div>
           <div class="text-sm">
@@ -87,13 +87,13 @@ const currentAddress2 = () => {
             <div class="text-xl font-medium">
               Current Address
             </div>
-            <div class="flex flex-col md:!flex-row xl:flex-row w-full gap-1">
+            <div class="flex flex-col md:!flex-row w-full gap-1">
               <span class="text-[#000014B2] truncate text-sm underline underline-offset-1">
                 {{ currentAddress2() || 'Not Connected' }}
               </span>
-              <div class="flex items-center mt-2 md:mt-0 xl:mt-0">
+              <div class="flex items-center mt-2 md:!mt-0">
                 <div
-                  class="border-1 ml-0 md:ml-2 xl:ml-2 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
+                  class="border-1 ml-0 md:!ml-2 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
                   @click="toggleAddressFormat">
                   {{ addressFormat }}
                   <img src="../../../assets/page/switch.svg" />
@@ -107,13 +107,13 @@ const currentAddress2 = () => {
           </div>
         </div>
       </div>
-      <div class="w-full md:w-[383px] xl:w-[383px] flex-shrink-0 mt-4 md:mt-0 xl:mt-0">
+      <div class="w-full md:!w-[383px] flex-shrink-0 mt-4 md:!mt-0">
         <img src="../../../assets//home/home.png" class="w-full h-auto" />
       </div>
     </div>
-    <div class="flex bg-white flex-col px-4 md:px-6 xl:px-6 py-6 md:py-8 xl:py-8">
+    <div class="flex bg-white flex-col px-4 md:!px-6 py-6 md:!py-8">
       <div>
-        <div class="text-2xl md:text-[32px] xl:text-[32px] font-medium">
+        <div class="text-2xl md:!text-[32px] font-medium">
           Participate in Governance
         </div>
         <div class="text-sm">
@@ -121,8 +121,8 @@ const currentAddress2 = () => {
         </div>
       </div>
 
-      <div class="flex flex-col md:flex-row xl:flex-row gap-4 mt-4">
-        <div class="flex-1 flex flex-col md:flex-row xl:flex-row gap-3 px-4 md:px-6 xl:px-6 py-6 md:py-8 xl:py-8 bg-[#F5FBFF]">
+      <div class="flex flex-col md:!flex-row gap-4 mt-4">
+        <div class="flex-1 flex flex-col md:!flex-row gap-3 px-4 md:!px-6 py-6 md:!py-8 bg-[#F5FBFF]">
           <div class="flex flex-col gap-3">
             <div class="text-2xl font-medium">Staking</div>
             <div class="">
@@ -135,11 +135,11 @@ const currentAddress2 = () => {
               </div>
             </RouterLink>
           </div>
-          <div class="w-full md:w-[150px] xl:w-[150px] mt-4 md:mt-0 xl:mt-0">
+          <div class="w-full md:!w-[150px] mt-4 md:!mt-0">
             <img src="../../../assets//home/staking.png" class="w-full h-auto" />
           </div>
         </div>
-        <div class="flex-1 bg-[#F5FBFF] flex flex-col md:flex-row xl:flex-row px-4 md:px-6 xl:px-6 py-6 md:py-8 xl:py-8 gap-3">
+        <div class="flex-1 bg-[#F5FBFF] flex flex-col md:!flex-row px-4 md:!px-6 py-6 md:!py-8 gap-3">
           <div class="flex flex-col gap-3">
             <div class="text-2xl font-medium">Governance</div>
             <div>
@@ -151,7 +151,7 @@ const currentAddress2 = () => {
               </div>
             </RouterLink>
           </div>
-          <div class="w-full md:w-[150px] xl:w-[150px] mt-4 md:mt-0 xl:mt-0">
+          <div class="w-full md:!w-[150px] mt-4 md:!mt-0">
             <img src="../../../assets//home/gov.png" class="w-full h-auto" />
           </div>
         </div>
