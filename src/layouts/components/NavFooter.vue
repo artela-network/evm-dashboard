@@ -22,32 +22,32 @@
       <div class="w-full sm:w-1/2 text-lg sm:flex hidden">
         <!-- Build section -->
         <div class="w-full sm:w-1/3 flex flex-col gap-6">
-          <h3 class="font-bold">Build</h3>
+          <h3 class="font-bold text-white">Build</h3>
           <ul class="flex flex-col gap-4">
-            <div @click="handleLinkClick($event, 'https://artela.network/build/intro-to-artela')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Intro to Artela</div>
-            <div @click="handleLinkClick($event, 'https://artela.network/home-artela-frontier')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Artela Frontier</div>
-            <div @click="handleLinkClick($event, 'https://artela.network/build/developer-portal')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Developer Portal</div>
-            <div @click="handleLinkClick($event, 'https://docs.artela.network/develop')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Documentation</div>
-            <div @click="handleLinkClick($event, 'https://docs.google.com/forms/d/e/1FAIpQLSfHGowv6w0xN-JU9k4KOOr0ZlAIueQECgW8S6xZf8rJQMAihA/viewform')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Become a Partner</div>
+            <li @click="handleLinkClick($event, 'https://artela.network/build/intro-to-artela')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Intro to Artela</li>
+            <li @click="handleLinkClick($event, 'https://artela.network/home-artela-frontier')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Artela Frontier</li>
+            <li @click="handleLinkClick($event, 'https://artela.network/build/developer-portal')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Developer Portal</li>
+            <li @click="handleLinkClick($event, 'https://docs.artela.network/develop')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Documentation</li>
+            <li @click="handleLinkClick($event, 'https://docs.google.com/forms/d/e/1FAIpQLSfHGowv6w0xN-JU9k4KOOr0ZlAIueQECgW8S6xZf8rJQMAihA/viewform')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Become a Partner</li>
           </ul>
         </div>
         
         <!-- Explore section -->
         <div class="w-full sm:w-1/3 flex flex-col gap-6">
-          <h3 class="font-bold">Explore</h3>
+          <h3 class="font-bold text-white">Explore</h3>
           <ul class="flex flex-col gap-4">
-            <div @click="handleLinkClick($event, 'https://artela.network/explore/aspect-hub')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Aspect Hub</div>
-            <div @click="handleLinkClick($event, 'https://github.com/artela-network/aspect-whitepaper/blob/main/latex/build/whitepaper.pdf')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Whitepaper</div>
-            <div @click="handleLinkClick($event, 'https://artela.notion.site/Artela-Community-Center-31ee85ab3cbb45f1b59fb58093313e26')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Community Center</div>
+            <li @click="handleLinkClick($event, 'https://artela.network/explore/aspect-hub')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Aspect Hub</li>
+            <li @click="handleLinkClick($event, 'https://github.com/artela-network/aspect-whitepaper/blob/main/latex/build/whitepaper.pdf')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Whitepaper</li>
+            <li @click="handleLinkClick($event, 'https://artela.notion.site/Artela-Community-Center-31ee85ab3cbb45f1b59fb58093313e26')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Community Center</li>
           </ul>
         </div>
         
         <!-- About section -->
         <div class="w-full sm:w-1/3 flex flex-col gap-6">
-          <h3 class="font-bold">About</h3>
+          <h3 class="font-bold text-white">About</h3>
           <ul class="flex flex-col gap-4">
-            <div @click="handleLinkClick($event, 'https://artela.network/blog')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Blog</div>
-            <div @click="handleLinkClick($event, 'mailto:info@artela.network')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Contact</div>
+            <li @click="handleLinkClick($event, 'https://artela.network/blog')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Blog</li>
+            <li @click="handleLinkClick($event, 'mailto:info@artela.network')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Contact</li>
           </ul>
         </div>
       </div>
