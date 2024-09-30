@@ -15,6 +15,13 @@ module.exports = {
       borderWidth: {
         '1': '1px', // 添加自定义的 border-1 实用类
       },
+      screens: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
     },
   },
   plugins: [require('daisyui')],
