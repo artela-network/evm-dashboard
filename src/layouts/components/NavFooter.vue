@@ -1,8 +1,8 @@
 <template>
   <!-- footer -->
-  <footer class="bg-black sm:bg-[#0000C9] text-white py-14 sm:py-24 px-4 sm:px-0 sm:w-full z-30">
-    <div class="container mx-auto flex flex-col sm:flex-row flex-wrap justify-between">
-      <div class="w-full sm:w-1/4 mb-6 flex flex-col gap-10 justify-between sm:justify-normal sm:border-none border-b-[0.0625rem] border-[#4d4d4d] pb-8">
+  <footer class="bg-black sm:bg-[#0000C9] xl:bg-[#0000C9] text-white py-14 sm:py-24 xl:py-24 px-4 sm:px-0 xl:px-0 sm:w-full xl:w-full z-30">
+    <div class="container mx-auto flex sm:flex-row xl:flex-row flex-col flex-wrap justify-between">
+      <div class="w-full sm:w-1/4 xl:w-1/4 mb-6 flex flex-col gap-10 justify-between sm:justify-normal xl:justify-normal sm:border-none xl:border-none border-b-[0.0625rem] border-[#4d4d4d] pb-8">
         <img src="../../assets/footer/art-w.svg" alt="Artela Logo" class="w-36" />
         <div class="flex space-x-4">
           <div @click="handleLinkClick($event, 'https://x.com/artela_network')" class="text-white cursor-pointer">
@@ -19,9 +19,9 @@
       </div>
       
       <!-- Build, Explore, About sections -->
-      <div class="w-full sm:w-1/2 text-lg flex">
+      <div class="w-full sm:w-1/2 xl:w-1/2 text-lg flex">
         <!-- Build section -->
-        <div class="w-full sm:w-1/3 flex flex-col gap-6">
+        <div class="w-full sm:w-1/3 xl:w-1/3 flex flex-col gap-6">
           <h3 class="font-bold text-white">Build</h3>
           <ul class="flex flex-col gap-4">
             <li @click="handleLinkClick($event, 'https://artela.network/build/intro-to-artela')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Intro to Artela</li>
@@ -33,7 +33,7 @@
         </div>
         
         <!-- Explore section -->
-        <div class="w-full sm:w-1/3 flex flex-col gap-6">
+        <div class="w-full sm:w-1/3 xl:w-1/3 flex flex-col gap-6">
           <h3 class="font-bold text-white">Explore</h3>
           <ul class="flex flex-col gap-4">
             <li @click="handleLinkClick($event, 'https://artela.network/explore/aspect-hub')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Aspect Hub</li>
@@ -43,7 +43,7 @@
         </div>
         
         <!-- About section -->
-        <div class="w-full sm:w-1/3 flex flex-col gap-6">
+        <div class="w-full sm:w-1/3 xl:w-1/3 flex flex-col gap-6">
           <h3 class="font-bold text-white">About</h3>
           <ul class="flex flex-col gap-4">
             <li @click="handleLinkClick($event, 'https://artela.network/blog')" class="text-[#FFFFFFAA] hover:text-[#FFFFFFEF] text-base cursor-pointer">Blog</li>
