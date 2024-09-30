@@ -66,7 +66,7 @@ const currentAddress2 = () => {
 
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex flex-col md:flex-row xl:flex-row bg-white px-4 md:px-6 xl:px-6 py-6 md:py-8 xl:py-8">
+    <div class="flex flex-col md:!flex-row xl:flex-row bg-white px-4 md:px-6 xl:px-6 py-6 md:py-8 xl:py-8">
       <div class="flex flex-col gap-4 justify-around">
         <div class="flex flex-col gap-3">
           <div class="text-2xl md:text-[28px] xl:text-[28px] font-medium leading-8">
@@ -87,7 +87,7 @@ const currentAddress2 = () => {
             <div class="text-xl font-medium">
               Current Address
             </div>
-            <div class="flex flex-col md:flex-row xl:flex-row w-full gap-1">
+            <div class="flex flex-col md:!flex-row xl:flex-row w-full gap-1">
               <span class="text-[#000014B2] truncate text-sm underline underline-offset-1">
                 {{ currentAddress2() || 'Not Connected' }}
               </span>
