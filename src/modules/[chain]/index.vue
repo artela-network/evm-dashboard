@@ -198,25 +198,25 @@ watch(currentAddress2, (newAddress, oldAddress) => {
         <div class="bg-[#E2E6FF] dark:bg-[#373f59] rounded-sm px-4 py-3">
           <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
           <div class="text-lg font-semibold text-main">
-            {{ walletStore.balanceOfStakingToken && walletStore.balanceOfStakingToken.amount !== '0' ? format.formatToken(walletStore.balanceOfStakingToken) : '--' }}
+            {{ walletStore.currentAddress ? (walletStore.balanceOfStakingToken && walletStore.balanceOfStakingToken.amount !== '0' ? format.formatToken(walletStore.balanceOfStakingToken) : '--') : '--' }}
           </div>
         </div>
         <div class="bg-[#FFF4DE] dark:bg-[#373f59] rounded-sm px-4 py-3">
           <div class="text-sm mb-1">{{ $t('module.staking') }}</div>
           <div class="text-lg font-semibold text-main">
-            {{ format.formatToken(walletStore.stakingAmount) }}
+            {{ walletStore.currentAddress ? format.formatToken(walletStore.stakingAmount) : '--' }}
           </div>
         </div>
         <div class="bg-[#DCFCE7] dark:bg-[#373f59] rounded-sm px-4 py-3">
           <div class="text-sm mb-1">{{ $t('index.reward') }}</div>
           <div class="text-lg font-semibold text-main">
-            {{ format.formatToken(walletStore.rewardAmount) }}
+            {{ walletStore.currentAddress ? format.formatToken(walletStore.rewardAmount) : '--' }}
           </div>
         </div>
         <div class="bg-[#FFE2E5] dark:bg-[#373f59] rounded-sm px-4 py-3">
           <div class="text-sm mb-1">{{ $t('index.unbonding') }}</div>
           <div class="text-lg font-semibold text-main">
-            {{ format.formatToken(walletStore.unbondingAmount) }}
+            {{ walletStore.currentAddress ? format.formatToken(walletStore.unbondingAmount) : '--' }}
           </div>
         </div>
         <div class="bg-[#fae4e4] dark:bg-[#373f59] rounded-sm px-4 py-3">

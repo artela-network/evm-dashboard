@@ -316,6 +316,14 @@ const openLink = () => {
     window.open('https://docs.artela.network/develop/validate/Delegators', '_blank');
 }
 
+const handleDelegate = async (validatorAddress: string) => {
+    await dialog.open('delegate', {
+        validator_address: validatorAddress,
+    });
+    // After delegation, refresh wallet store data
+    await walletStore.loadMyAsset();
+};
+
 loadAvatars();
 </script>
 <template>
@@ -351,7 +359,7 @@ loadAvatars();
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ walletStore.balanceOfStakingToken && walletStore.balanceOfStakingToken.amount !== '0' ? format.formatToken(walletStore.balanceOfStakingToken) : '--' }}
+                            {{ walletStore.currentAddress ? (walletStore.balanceOfStakingToken && walletStore.balanceOfStakingToken.amount !== '0' ? format.formatToken(walletStore.balanceOfStakingToken) : '--') : '--' }}
                         </div>
                     </div>
                 </div>
@@ -363,7 +371,7 @@ loadAvatars();
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('module.staking') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ format.formatToken(walletStore.stakingAmount) }}
+                            {{ walletStore.currentAddress ? format.formatToken(walletStore.stakingAmount) : '--' }}
                         </div>
                     </div>
                 </div>
@@ -375,7 +383,7 @@ loadAvatars();
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('index.reward') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ format.formatToken(walletStore.rewardAmount) }}
+                            {{ walletStore.currentAddress ? format.formatToken(walletStore.rewardAmount) : '--' }}
                         </div>
                     </div>
                 </div>
@@ -387,7 +395,7 @@ loadAvatars();
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('index.unbonding') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ format.formatToken(walletStore.unbondingAmount) }}
+                            {{ walletStore.currentAddress ? format.formatToken(walletStore.unbondingAmount) : '--' }}
                         </div>
                     </div>
                 </div>
@@ -531,12 +539,9 @@ loadAvatars();
                                     </div>
                                     <label v-else for="delegate"
                                         class="btn btn-sm btn-primary text-[#0000C9] border-transparent bg-[#F1F5FF] rounded-sm capitalize"
-                                        @click="
-                                            dialog.open('delegate', {
-                                                validator_address:
-                                                    v.operator_address,
-                                            })
-                                            ">{{ $t('account.btn_delegate') }}</label>
+                                        @click="handleDelegate(v.operator_address)">
+                                        {{ $t('account.btn_delegate') }}
+                                    </label>
                                 </td>
                             </tr>
                         </tbody>
