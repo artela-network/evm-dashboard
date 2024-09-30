@@ -2,7 +2,7 @@
   <!-- footer -->
   <footer class="bg-black sm:bg-[#0000C9] text-white py-14 sm:py-24 px-4 sm:px-0 sm:w-full z-30">
     <div class="container mx-auto flex flex-col sm:flex-row flex-wrap justify-between">
-      <div class="w-full sm:w-1/4 mb-6 flex flex-row sm:flex-col gap-10 justify-between sm:justify-normal sm:border-none border-b-[0.0625rem] border-[#4d4d4d] pb-8">
+      <div class="w-full sm:w-1/4 mb-6 flex flex-col gap-10 justify-between sm:justify-normal sm:border-none border-b-[0.0625rem] border-[#4d4d4d] pb-8">
         <img src="../../assets/footer/art-w.svg" alt="Artela Logo" class="w-36" />
         <div class="flex space-x-4">
           <div @click="handleLinkClick($event, 'https://x.com/artela_network')" class="text-white cursor-pointer">
