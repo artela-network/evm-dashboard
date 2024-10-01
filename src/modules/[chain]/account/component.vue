@@ -163,7 +163,7 @@ console.log(unbonding,'==----===')
             </tr>
             <tr v-for="(v, index) in delegations" :key="index">
               <td class="text-caption text-primary py-3">
-                <RouterLink :to="`/${chain}/staking/${v.delegation.validator_address}`">{{
+                <RouterLink :to="`/artela/staking/${v.delegation.validator_address}`">{{
                   format.validatorFromBech32(v.delegation.validator_address) || v.delegation.validator_address
                   }}</RouterLink>
               </td>

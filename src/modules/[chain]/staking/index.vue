@@ -317,11 +317,32 @@ const openLink = () => {
 }
 
 const handleDelegate = async (validatorAddress: string) => {
-    await dialog.open('delegate', {
-        validator_address: validatorAddress,
-    });
-    // After delegation, refresh wallet store data
-    await walletStore.loadMyAsset();
+    try {
+        await dialog.open('delegate', {
+            validator_address: validatorAddress,
+        });
+        
+        // 等待一段时间，确保交易被确认
+        await new Promise(resolve => setTimeout(resolve, 5000)); // 等待5秒
+
+        // 刷新钱包数据
+        await walletStore.loadMyAsset();
+        
+        // 强制更新组件
+        if (typeof updateState === 'function') {
+            updateState();
+        }
+        
+        // 如果使用了 Pinia，可以考虑重置整个 store
+        // walletStore.$reset();
+        
+        // 通知用户
+        // 使用你的通知系统，例如 toast 或 alert
+        // showNotification('资产已更新');
+    } catch (error) {
+        console.error('委托操作或数据刷新失败:', error);
+        // 处理错误，可能需要通知用户
+    }
 };
 
 loadAvatars();
@@ -406,8 +427,8 @@ loadAvatars();
         <div class="mt-6">
             <div class="flex items-center justify-between py-1 bg-[#E6F4FF] px-3">
                 <div class="tabs tabs-boxed bg-transparent">
-                    <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'featured' }"
-                        @click="tab = 'featured'">{{ $t('staking.popular') }}</a>
+                    <!-- <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'featured' }"
+                        @click="tab = 'featured'">{{ $t('staking.popular') }}</a> -->
                     <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'active' }"
                         @click="tab = 'active'">{{
                             $t('staking.active') }}</a>

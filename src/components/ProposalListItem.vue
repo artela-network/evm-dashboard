@@ -138,7 +138,7 @@ function metaItem(metadata: string|undefined): { title: string; summary: string 
           <td colspan="5">
             <div class="flex flex-col items-center justify-center py-8">
               <div class="text-3xl font-bold opacity-20">¯\_(ツ)_/¯</div>
-              <div class="mt-4 text-base-content/60">No Data found</div>
+              <div class="mt-4 text-base-content/60">No proposals found</div>
             </div>
           </td>
         </tr>

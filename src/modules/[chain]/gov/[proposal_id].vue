@@ -266,7 +266,9 @@ function metaItem(metadata: string|undefined): { title: string; summary: string 
               class="absolute inset-x-0 inset-y-0 rounded-sm"
               :class="`${item.class}`"
               :style="`width: ${
-                item.value === '-' || item.value === 'NaN%' ? '0%' : item.value
+                item.value === '-' || item.value === 'NaN%' ? '0%' : 
+                parseInt( item.value.toString() ) > 100 ? '100%' : 
+                `${item.value}%`
               }`"
             ></div>
             <p
@@ -276,19 +278,19 @@ function metaItem(metadata: string|undefined): { title: string; summary: string 
             </p>
           </div>
         </div>
-        <div class="mt-6 grid grid-cols-2">
+        <div class="mt-6 flex justify-center">
           <label
             for="vote"
-            class="btn btn-primary float-right btn-sm mx-1"
+            class="btn btn-primary float-right btn-sm mx-1 w-full"
             @click="dialog.open('vote', { proposal_id })"
             >{{ $t('gov.btn_vote') }}</label
           >
-          <label
+          <!-- <label
             for="deposit"
             class="btn btn-primary float-right btn-sm mx-1"
             @click="dialog.open('deposit', { proposal_id })"
             >{{ $t('gov.btn_deposit') }}</label
-          >
+          > -->
         </div>
       </div>
 
