@@ -342,6 +342,8 @@ const handleDelegate = async (validatorAddress: string) => {
     } catch (error) {
         console.error('委托操作或数据刷新失败:', error);
         // 处理错误，可能需要通知用户
+    } finally {
+        walletStore.loadMyAsset()
     }
 };
 
