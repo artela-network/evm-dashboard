@@ -74,10 +74,10 @@ function search() {
             </div>
         </div>
 
-        <div v-show="tab === 'search'" class="bg-base-100 rounded overflow-x-auto">
+        <div v-show="tab === 'search'" class="bg-base-100 rounded overflow-x-auto min-h-[500px]">
             <div class="p-4">
                 <div class="form-control">
-                    <input v-model="hash" type="text" class="input input-bordered" placeholder="Search by Tx Hash" @blur="search"/>
+                    <input v-model="hash" type="text" class="input input-bordered" placeholder="Search by Tx Hash" @blur="search" @keyup.enter="search"/>
                 </div>
             </div>
         </div>

@@ -15,6 +15,7 @@ import { formatSeconds } from '@/libs/utils'
 import { bech32 } from 'bech32';
 import { diff } from 'semver';
 const props = defineProps(['chain']);
+import { useRouter } from 'vue-router';
 
 const staking = useStakingStore();
 const base = useBaseStore();
@@ -24,7 +25,7 @@ const chainStore = useBlockchain();
 const mintStore = useMintStore()
 const walletStore = useWalletStore();
 const blockchain = useBlockchain();
-
+const router = useRouter();
 
 const cache = JSON.parse(localStorage.getItem('avatars') || '{}');
 const avatars = ref(cache || {});
@@ -321,21 +322,21 @@ const handleDelegate = async (validatorAddress: string) => {
         await dialog.open('delegate', {
             validator_address: validatorAddress,
         });
-        
+
         // 等待一段时间，确保交易被确认
         await new Promise(resolve => setTimeout(resolve, 5000)); // 等待5秒
 
         // 刷新钱包数据
         await walletStore.loadMyAsset();
-        
+
         // 强制更新组件
         if (typeof updateState === 'function') {
             updateState();
         }
-        
+
         // 如果使用了 Pinia，可以考虑重置整个 store
         // walletStore.$reset();
-        
+
         // 通知用户
         // 使用你的通知系统，例如 toast 或 alert
         // showNotification('资产已更新');
@@ -345,6 +346,9 @@ const handleDelegate = async (validatorAddress: string) => {
     } finally {
         walletStore.loadMyAsset()
     }
+};
+const toWallet = () => {
+    router.push('/Artela');
 };
 
 loadAvatars();
@@ -382,12 +386,14 @@ loadAvatars();
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ walletStore.currentAddress ? (walletStore.balanceOfStakingToken && walletStore.balanceOfStakingToken.amount !== '0' ? format.formatToken(walletStore.balanceOfStakingToken) : '--') : '--' }}
+                            {{ walletStore.currentAddress ? (walletStore.balanceOfStakingToken &&
+                                walletStore.balanceOfStakingToken.amount !== '0' ?
+                                format.formatToken(walletStore.balanceOfStakingToken) : '--') : '--' }}
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex-row items-center">
+                <div class="flex flex-row items-center" @click="toWallet">
                     <div class="w-[44px]">
                         <img src="../../../assets/page/logo2.svg" />
                     </div>
@@ -512,7 +518,7 @@ loadAvatars();
                                                 v.description?.website ||
                                                 v.description?.identity ||
                                                 '-'
-                                            }}</span>
+                                                }}</span>
                                         </div>
                                     </div>
                                 </td>

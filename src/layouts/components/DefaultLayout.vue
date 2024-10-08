@@ -82,6 +82,13 @@ const FAQClick = () => {
 const NetworkClick = () => {
   window.open('https://betanet-scan.artela.network/', '_blank')
 }
+const HomeClick = () => {
+  if (window.location.pathname === '/Artela/home') {
+    window.open('https://artela.network/', '_blank');
+  } else {
+    window.location.href = '/';
+  }
+}
 </script>
 
 <template>
@@ -92,9 +99,9 @@ const NetworkClick = () => {
         class="w-64 fixed left-0 top-0 bottom-0 overflow-auto bg-base-100 border-r border-gray-100 dark:border-gray-700 z-10"
         :class="{ block: sidebarShow, 'hidden xl:!block': !sidebarShow }">
         <div class="flex justify-between mt-1 pl-4 py-4 mb-1">
-          <RouterLink to="/" class="flex items-center">
+          <div @click="HomeClick" class="flex items-center cursor-pointer">
             <img src="../../assets/logo.svg" />
-          </RouterLink>
+          </div>
           <div class="pr-4 cursor-pointer xl:!hidden" @click="sidebarShow = false">
             <Icon icon="mdi-close" class="text-2xl" />
           </div>
@@ -157,10 +164,10 @@ const NetworkClick = () => {
 
           <!-- <NavSearchBar />-->
           <!-- <NavbarThemeSwitcher class="!inline-block" /> -->
-          <div class="cursor-pointer hover:text-blue-500 mr-4 text-lg" @click="">
+          <div class="cursor-pointer hover:text-blue-500 mr-4 text-lg" @click="FAQClick">
             FAQ
           </div>
-          <div class="cursor-pointer hover:text-blue-500 w-8 mr-4" @click="">
+          <div class="cursor-pointer hover:text-blue-500 w-8 mr-4" @click="NetworkClick">
             <img src="../../assets/header/network.svg" />
           </div>
           <NavBarWallet />
