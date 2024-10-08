@@ -393,7 +393,7 @@ loadAvatars();
                     </div>
                 </div>
 
-                <div class="flex flex-row items-center" @click="toWallet">
+                <div class="flex flex-row items-center cursor-pointer" @click="toWallet">
                     <div class="w-[44px]">
                         <img src="../../../assets/page/logo2.svg" />
                     </div>
@@ -417,7 +417,7 @@ loadAvatars();
                     </div>
                 </div>
 
-                <div class="flex flex-row items-center">
+                <div class="flex flex-row items-center cursor-pointer" @click="toWallet">
                     <div class="w-[44px]">
                         <img src="../../../assets/page/logo4.svg" />
                     </div>
