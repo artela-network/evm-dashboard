@@ -34,7 +34,7 @@ const yesterday = ref({} as Record<string, number>);
 const tab = ref('active');
 const unbondList = ref([] as Validator[]);
 const slashing = ref({} as SlashingParam)
-const isDataLoaded = ref(false);
+const isDataLoaded = ref(true);
 
 onMounted(async () => {
     try {
@@ -354,7 +354,7 @@ const toWallet = () => {
 loadAvatars();
 </script>
 <template>
-    <div v-if="isDataLoaded">
+    <div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
             <div class="w-[100px] flex-shrink-0">
                 <img src="../../../assets/page/staking.png" />
@@ -457,7 +457,7 @@ loadAvatars();
                                 <th scope="col" class="uppercase font-normal" style="width: 3rem; position: relative">
                                     {{ $t('staking.rank') }}
                                 </th>
-                                <th scope="col" class="uppercase font-normal">{{ $t('staking.validator') }}</th>
+                                <th scope="col" class="uppercase font-normal text-left px-6">{{ $t('staking.validator') }}</th>
                                 <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.voting_power')
                                     }}</th>
                                 <!-- <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.24h_changes') }}</th> -->
@@ -554,7 +554,7 @@ loadAvatars();
                                     {{ change24Text(v) }}
                                 </td> -->
                                 <!-- 👉 commission -->
-                                <td class="text-right text-xs">
+                                <td class="text-center text-xs">
                                     {{
                                         format.formatCommissionRate(
                                             v.commission?.commission_rates?.rate
@@ -594,10 +594,7 @@ loadAvatars();
             </div>
         </div>
     </div>
-    <div v-else>
-        <!-- 加载指示器或占位符 -->
-        Loading staking data...
-    </div>
+
 </template>
 
 <route>

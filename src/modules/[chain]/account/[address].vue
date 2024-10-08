@@ -10,6 +10,7 @@ import DonutChart from '@/components/charts/DonutChart.vue';
 import { computed, ref } from '@vue/reactivity';
 import { onMounted } from 'vue';
 import { Icon } from '@iconify/vue';
+import { bech32 } from 'bech32';
 
 import type {
   AuthAccount,
@@ -129,6 +130,23 @@ function mapAmount(events:{type: string, attributes: {key: string, value: string
     .filter(x => x.key === 'YW1vdW50'|| x.key === `amount`)
     .map(x => x.key==='amount'? x.value : String.fromCharCode(...fromBase64(x.value)))
 }
+function cosmosToEvmAddress(cosmosAddress: string): string {
+  // 检查 bech32 是否已正确导入
+  if (!cosmosAddress) {
+    return ''
+  }
+
+  // 解码 Bech32 地址
+  const decoded = bech32.decode(cosmosAddress);
+  const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
+
+  // 将公钥哈希转换为 EVM 地址
+  const evmAddress = '0x' + Array.from(pubkeyHash)
+    .map(byte => byte.toString(16).padStart(2, '0'))
+    .join('');
+
+  return evmAddress;
+}
 </script>
 <template>
   <div v-if="account">
@@ -153,7 +171,7 @@ function mapAmount(events:{type: string, attributes: {key: string, value: string
         <!-- content -->
         <div class="flex flex-1 flex-col truncate pl-4">
           <h2 class="text-sm card-title">{{ $t('account.address') }}:</h2>
-          <span class="text-xs truncate"> {{ address }}</span>
+          <span class="text-xs truncate"> {{cosmosToEvmAddress(address) }}</span>
         </div>
       </div>
     </div>
