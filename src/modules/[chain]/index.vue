@@ -157,10 +157,10 @@ const currentAddress2 = computed(() => {
 })
 
 // Watch for changes in currentAddress2
-watch(currentAddress2, (newAddress, oldAddress) => {
-  if (newAddress !== oldAddress) {
-    walletStore.loadMyAsset();
-  }
+watch(() => walletStore.currentAddress, async (newAddress, oldAddress) => {
+    if (newAddress !== oldAddress) {
+        await walletStore.loadMyAsset();
+    }
 });
 </script>
 
