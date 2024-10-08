@@ -20,10 +20,10 @@
   resolved "https://registry.yarnpkg.com/@antfu/utils/-/utils-0.7.6.tgz#30a046419b9e1ecd276e53d41ab68fb6c558c04d"
   integrity sha512-pvFiLP2BeOKA/ZOS6jxx4XhKzdVLHDhGlFEaZ2flWWYf2xOqVniqpk38I04DFRyz+L0ASggl7SkItTc+ZLju4w==
 
-"@artela/wallet-widget@0.1.27":
-  version "0.1.27"
-  resolved "https://registry.yarnpkg.com/@artela/wallet-widget/-/wallet-widget-0.1.27.tgz#a62d106a90129e966efadad60e9e95b7af4990b9"
-  integrity sha512-ts93zR/iqcHenP3dcevwPO418eSurmPbiPuvGRBxIMGQtIgN8WTzJz8CtGVH6Wq+3Y4AROGNFIDW9KOZbWY0bQ==
+"@artela/wallet-widget@0.1.28":
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/@artela/wallet-widget/-/wallet-widget-0.1.28.tgz#f20d68dcabb15ee6db2c6d77f71997fffc69f426"
+  integrity sha512-FnP7YqF5yWK3LjqBPSvDYFB8P/7sTNsFuIbgV619AjvrshK0aylQKA0TBCZLjs3eKcw3Co3ZknD3VaUlLBr8cQ==
   dependencies:
     "@cosmjs/amino" "^0.32.0"
     "@cosmjs/cosmwasm-stargate" "^0.32.0"

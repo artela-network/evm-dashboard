@@ -223,7 +223,7 @@ console.log(unbonding,'==----===')
     <div class="bg-base-100 px-4 pt-3 pb-4 rounded mb-4 shadow" v-if="unbonding && unbonding.length > 0">
       <h2 class="card-title mb-4">Undelegating Queue
         <button class="tooltip"
-          :data-tip="`Your undelegating ART are displayed here. There is a ${store.staking} waiting period for unlocking, and Remaining shows the time left until the process is complete.`">
+          :data-tip="`Your undelegating ART are displayed here. There is a ${store.staking.items[0].value} waiting period for unlocking, and Remaining shows the time left until the process is complete.`">
           <img src="@/assets/tip.svg" />
         </button>
       </h2>
