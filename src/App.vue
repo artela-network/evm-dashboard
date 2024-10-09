@@ -5,6 +5,7 @@ import TxDialog from './components/TxDialog.vue';
 
 onMounted(() => {
   themeChange(false);
+  document.documentElement.setAttribute('data-theme', 'light');
 });
 </script>
 
