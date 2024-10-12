@@ -66,7 +66,20 @@ const currentAddress2 = () => {
     ? cosmosToEvmAddress(walletStore.currentAddress)
     : walletStore.currentAddress;
 }
-
+const copyCurrentAddress2 = async () => {
+  try {
+    await navigator.clipboard.writeText(currentAddress2());
+    showCopyToast.value = 1;
+    setTimeout(() => {
+      showCopyToast.value = 0;
+    }, 1000);
+  } catch (err) {
+    showCopyToast.value = 2;
+    setTimeout(() => {
+      showCopyToast.value = 0;
+    }, 1000);
+  }
+}
 </script>
 
 <template>
@@ -86,16 +99,34 @@ const currentAddress2 = () => {
           style="overflow-wrap: anywhere" @click="copyAdress(currentAddress2())">
           {{ currentAddress2() }}
         </a>
-        <div class="flex gap-2 items-center" v-if="walletStore.currentAddress">
+
+        <div class="flex gap-1 items-center" v-if="walletStore.currentAddress">
+          <div class="flex items-center" v-if="walletStore.currentAddress">
+            <div
+              class="border-1 ml-2 rounded-sm flex justify-center items-center px-2 py-1 gap-1 cursor-pointer leading-3 text-[12px] border-black relative"
+              @click="copyCurrentAddress2">
+              Copy
+              <img src="../../assets/copy.svg" alt="Copy" class="w-3 h-3" />
+              <span v-if="showCopyToast === 1"
+                class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs py-1 px-2 rounded">
+                Copied!
+              </span>
+              <span v-if="showCopyToast === 2"
+                class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white text-xs py-1 px-2 rounded">
+                Copy failed
+              </span>
+            </div>
+          </div>
           <div
             class="border-1 py-1 ml-2 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[12px] border-black"
             @click="toggleAddressFormat">
             {{ addressFormat }}
             <img src="../../assets/page/switch.svg" />
           </div>
-          <button class="tooltip" data-tip="Artela's native address is in EVM format, but when participating in on-chain governance, your address will automatically convert to Cosmos format. You can freely switch the display format of your address here. Note: During on-chain governance, all addresses in transactions will be shown in Cosmos format.">
+          <button class="tooltip tooltip-left" data-tip="Artela's native address is in EVM format, but when participating in on-chain governance, your address will automatically convert to Cosmos format. You can freely switch the display format of your address here. Note: During on-chain governance, all addresses in transactions will be shown in Cosmos format.">
             <img src="../../assets/tip.svg" />
           </button>
+
         </div>
         <div v-if="walletStore.currentAddress" class="divider mt-1 mb-1"></div>
         <a v-if="walletStore.currentAddress"

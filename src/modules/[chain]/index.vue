@@ -172,12 +172,12 @@ watch(() => walletStore.currentAddress, async (newAddress, oldAddress) => {
           <div class="text-lg font-medium">
             Current Address
           </div>
-          <div class="flex flex-row w-full gap-4" v-if="walletStore.currentAddress">
-            <span class="text-[#000014B2] truncate text-sm underline underline-offset-1">
+          <div class="flex sm:flex-row flex-col w-full gap-4" v-if="walletStore.currentAddress">
+            <span class="text-[#000014B2] truncate text-xs sm:text-sm underline underline-offset-1">
               {{ currentAddress2 || 'Not Connected' }}
             </span>
             <div
-              class="border-1 rounded-sm flex justify-center items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
+              class="border-1 rounded-sm flex justify-center max-w-fit items-center px-2 gap-1 cursor-pointer leading-3 text-[10px] border-black"
               @click="toggleAddressFormat">
               {{ addressFormat }}
               <img src="../../assets/page/switch.svg" />
