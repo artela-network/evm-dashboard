@@ -107,9 +107,9 @@ const copyCurrentAddress2 = async () => {
               </span>
               <div class="flex items-center mt-2 md:!mt-0">
                 <div
-                  class="border-1 ml-0 md:!ml-2 rounded-sm flex justify-center items-center px-2 py-1 gap-1 cursor-pointer leading-3 text-[12px] border-black relative"
+                  class=" -ml-2 rounded-sm flex justify-center items-center px-2 py-1 gap-1 cursor-pointer leading-3 text-[12px] border-black relative"
                   @click="copyCurrentAddress2">
-                  Copy
+     
                   <img src="../../../assets/copy.svg" alt="Copy" class="w-3 h-3" />
                   <span v-if="showCopyToast === 1" class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs py-1 px-2 rounded">
                     Copied!
