@@ -98,21 +98,7 @@ const copyCurrentAddress2 = async () => {
           class="block py-2 px-2 hover:bg-gray-100 dark:hover:bg-[#353f5a] rounded cursor-pointer"
           style="overflow-wrap: anywhere" @click="copyAdress(currentAddress2())">
           {{ currentAddress2() }}
-        </a>
-        <div class="flex items-center" v-if="walletStore.currentAddress">
-            <div
-              class="rounded-sm flex justify-center items-center px-2 py-1 gap-1 cursor-pointer leading-3 text-[12px] border-black relative"
-              @click="copyCurrentAddress2">
-              <span v-if="showCopyToast === 1"
-                class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs py-1 px-2 rounded">
-                Copied!
-              </span>
-              <span v-if="showCopyToast === 2"
-                class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white text-xs py-1 px-2 rounded">
-                Copy failed
-              </span>
-            </div>
-          </div>
+      </a>
         <div class="flex gap-1 items-center" v-if="walletStore.currentAddress">
 
           <div
