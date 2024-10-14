@@ -102,7 +102,7 @@ const copyCurrentAddress2 = async () => {
               Current Address
             </div>
             <div class="flex flex-col md:!flex-row w-full gap-1">
-              <span class="text-[#000014B2] truncate text-xs sm:text-base underline underline-offset-1">
+              <span class="text-[#000014B2] truncate text-xs sm:!text-base underline underline-offset-1">
                 {{ currentAddress2() || 'Not Connected' }}
               </span>
               <div class="flex items-center mt-2 md:!mt-0">
