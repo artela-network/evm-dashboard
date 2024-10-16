@@ -32,7 +32,6 @@ const paramStore = useParamStore()
 const coinInfo = computed(() => {
   return store.coinInfo;
 });
-console.log(store.stats,'--==--00--')
 const isEvmFormat = ref(true);
 // Computed property to determine the button text
 const addressFormat = computed(() => (isEvmFormat.value ? 'EVM' : 'Cosmos'));
