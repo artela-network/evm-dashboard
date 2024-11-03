@@ -148,10 +148,13 @@ const copyCurrentAddress2 = async () => {
       </div>
 
       <div class="flex flex-col md:!flex-row gap-4 mt-4">
-        <div class="flex-1 flex flex-col md:!flex-row gap-3 px-4 md:!px-6 py-6 md:!py-8 bg-[#F5FBFF]">
+        <div class="flex-1 flex flex-col md:!flex-row gap-3 px-4 md:!px-6 py-6 md:!py-8 bg-[#F5FBFF] relative">
+          <div class="absolute top-0 right-0 bg-[#ED4E00] text-white px-2 py-1 text-[12px] rounded-tr">
+            Limited-time 5% bonus
+          </div>
           <div class="flex flex-col gap-3">
             <div class="text-2xl font-medium">Staking</div>
-            <div class="">
+            <div class="w-[308px]">
               Stake ART to earn up to 7.2% annual yield and gain voting rights. Use your voting rights to vote on the
               on-chain proposals you support.
             </div>
@@ -161,14 +164,14 @@ const copyCurrentAddress2 = async () => {
               </div>
             </RouterLink>
           </div>
-          <div class="w-full md:!w-[150px] mt-4 md:!mt-0">
-            <img src="../../../assets//home/staking.png" class="w-full h-auto" />
+          <div class="w-full md:!w-[150px] flex-shrink-0 mt-4 md:!mt-0">
+            <img src="../../../assets//home/staking.png" class="w-[150px] h-[150px]" />
           </div>
         </div>
-        <div class="flex-1 bg-[#F5FBFF] flex flex-col md:!flex-row px-4 md:!px-6 py-6 md:!py-8 gap-3">
+        <div class="flex-1 flex flex-col md:!flex-row gap-3 px-4 md:!px-6 py-6 md:!py-8 bg-[#F5FBFF] relative">
           <div class="flex flex-col gap-3">
             <div class="text-2xl font-medium">Governance</div>
-            <div>
+            <div class="w-[308px]">
               Vote on the on-chain proposals you support and actively participate in the governance of Artela.
             </div>
             <RouterLink to="/Artela/gov" class="flex items-center mt-4">
@@ -177,8 +180,8 @@ const copyCurrentAddress2 = async () => {
               </div>
             </RouterLink>
           </div>
-          <div class="w-full md:!w-[150px] mt-4 md:!mt-0">
-            <img src="../../../assets//home/gov.png" class="w-full h-auto" />
+          <div class="w-full md:!w-[150px] flex-shrink-0 mt-4 md:!mt-0">
+            <img src="../../../assets//home/gov.png" class="w-[150px] h-[150px]" />
           </div>
         </div>
       </div>

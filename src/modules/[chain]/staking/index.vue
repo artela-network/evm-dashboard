@@ -16,6 +16,7 @@ import { bech32 } from 'bech32';
 import { diff } from 'semver';
 const props = defineProps(['chain']);
 import { useRouter } from 'vue-router';
+import AirdropDialog from '@/components/airdrop/Dialog.vue';
 
 const staking = useStakingStore();
 const base = useBaseStore();
@@ -351,10 +352,29 @@ const toWallet = () => {
     router.push('/Artela');
 };
 
+const showAirdropDialog = ref(!localStorage.getItem('airdropDialogShown'));
+
+const handleCloseAirdropDialog = () => {
+  showAirdropDialog.value = false;
+  localStorage.setItem('airdropDialogShown', 'true');
+};
+
 loadAvatars();
 </script>
 <template>
     <div>
+        <AirdropDialog :isOpen="showAirdropDialog" @close="handleCloseAirdropDialog" />
+        <div
+            class="flex flex-col md:!flex-col gap-1 px-2 md:!px-2 py-2 md:!py-2 bg-[#ED4E001A] border-[#ED4E00] border-1 rounded relative">
+            <div class="text-[#ED4E00]">
+                The First Staking++Deposit Returns 5% AR
+            </div>
+            <div class="text-[12px] text-[#00001491]">
+                From now until 00:00:00 UTC on November 20, 2024, users will receive a 5% ART return on their first
+                staking, provided the staking period exceeds 7 days. Rewards will be distributed by December 1, 2024.
+                Don’t miss out—join now!
+            </div>
+        </div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
             <div class="w-[100px] flex-shrink-0">
                 <img src="../../../assets/page/staking.png" />
@@ -457,7 +477,8 @@ loadAvatars();
                                 <th scope="col" class="uppercase font-normal" style="width: 3rem; position: relative">
                                     {{ $t('staking.rank') }}
                                 </th>
-                                <th scope="col" class="uppercase font-normal text-left px-6">{{ $t('staking.validator') }}</th>
+                                <th scope="col" class="uppercase font-normal text-left px-6">{{ $t('staking.validator')
+                                    }}</th>
                                 <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.voting_power')
                                     }}</th>
                                 <!-- <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.24h_changes') }}</th> -->
@@ -518,7 +539,7 @@ loadAvatars();
                                                 v.description?.website ||
                                                 v.description?.identity ||
                                                 '-'
-                                                }}</span>
+                                            }}</span>
                                         </div>
                                     </div>
                                 </td>
