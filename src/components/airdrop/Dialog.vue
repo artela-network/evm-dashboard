@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
-const props = defineProps<{
+interface Props {
     isOpen: boolean;
     onClose: () => void;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const handleClick = () => {
     props.onClose();
@@ -35,7 +35,7 @@ const handleClick = () => {
                     <p class="text-sm text-[#1B1B2B]/60 sm:text-base">
                         From now until 00:00:00 UTC on November 20, 2024, users will receive a 5% ART return on their
                         first staking, provided the staking period exceeds 7 days. Rewards will be distributed by
-                        December 1, 2024. Don’t miss out—join now!
+                        December 1, 2024. Don't miss out—join now!
                     </p>
                 </div>
 
