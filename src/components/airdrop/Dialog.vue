@@ -28,7 +28,7 @@ const handleClick = () => {
           />
         </div> -->
 
-                <div class="flex flex-col items-center gap-3 text-center">
+                <div class="flex  flex-col items-center gap-3 text-center">
                     <h3 class="text-xl font-bold text-[#1B1B2B] sm:text-2xl">
                         The First Staking++Deposit Returns 5% AR
                     </h3>
