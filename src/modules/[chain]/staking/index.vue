@@ -367,12 +367,10 @@ loadAvatars();
         <div
             class="flex flex-col md:!flex-col gap-1 px-2 md:!px-2 py-2 md:!py-2 bg-[#ED4E001A] border-[#ED4E00] border-1 rounded relative">
             <div class="text-[#ED4E00]">
-                The First Staking++Deposit Returns 5% AR
+                The First Staking++Deposit Returns 5% ART
             </div>
             <div class="text-[12px] text-[#00001491]">
-                From now until 00:00:00 UTC on November 20, 2024, users will receive a 5% ART return on their first
-                staking, provided the staking period exceeds 7 days. Rewards will be distributed by December 1, 2024.
-                Don’t miss out—join now!
+                From now until 00:00:00 UTC on November 20, 2024, users will receive a 5% ART return on their first staking, provided the staking period exceeds 7 days. Rewards will be distributed by December 1, 2024. Don’t miss out—join now!
             </div>
         </div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">

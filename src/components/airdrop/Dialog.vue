@@ -30,18 +30,16 @@ const handleClick = () => {
 
                 <div class="flex  flex-col items-center gap-3 text-center">
                     <h3 class="text-xl font-bold text-[#1B1B2B] sm:text-2xl">
-                        The First Staking++Deposit Returns 5% AR
+                        The First Staking++Deposit Returns 5% ART
                     </h3>
                     <p class="text-sm text-[#1B1B2B]/60 sm:text-base">
-                        From now until 00:00:00 UTC on November 20, 2024, users will receive a 5% ART return on their
-                        first staking, provided the staking period exceeds 7 days. Rewards will be distributed by
-                        December 1, 2024. Don't miss out—join now!
+                        From now until 00:00:00 UTC on November 20, 2024, users will receive a 5% ART return on their first staking, provided the staking period exceeds 7 days. Rewards will be distributed by December 1, 2024. Don’t miss out—join now!
                     </p>
                 </div>
 
                 <button @click="handleClick"
                     class="w-full rounded-sm bg-[#ED4E00] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#Ef4e00] sm:w-[357px] sm:py-4 sm:text-base">
-                    Let's start
+                    Go Now
                 </button>
             </div>
         </div>
