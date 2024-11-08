@@ -367,10 +367,10 @@ loadAvatars();
         <div
             class="flex flex-col md:!flex-col gap-1 px-2 md:!px-2 py-2 md:!py-2 bg-[#ED4E001A] border-[#ED4E00] border-1 rounded relative">
             <div class="text-[#ED4E00]">
-                The First Staking++Deposit Returns 5% ART
+                The First Staking++Deposit Returns 5% $ART
             </div>
             <div class="text-[12px] text-[#00001491]">
-                From now until 00:00:00 UTC on November 20, 2024, users will receive a 5% ART return on their first staking, provided the staking period exceeds 7 days. Rewards will be distributed by December 1, 2024. Don’t miss out—join now!
+                From now until 00:00:00 UTC on November 20, 2024, users will receive a 5% $ART return on their first staking, provided the staking period exceeds 7 days. Rewards will be distributed by December 1, 2024. Don’t miss out—join now!
             </div>
         </div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
@@ -379,10 +379,10 @@ loadAvatars();
             </div>
             <div class="flex flex-col gap-2 justify-around py-5">
                 <div class="text-xl font-medium">
-                    Maximize On-Chain Returns by Staking Your ART
+                    Maximize On-Chain Returns by Staking Your $ART
                 </div>
                 <div class="text-sm">
-                    Maximize your returns through ART staking: lock in your tokens to earn stable and predictable
+                    Maximize your returns through $ART staking: lock in your tokens to earn stable and predictable
                     rewards, with an annual yield of up to 7.2%. Additionally, gain voting rights to support the
                     on-chain proposals you believe in. Tokens can be unlocked at any time.
                 </div>
