@@ -2,7 +2,7 @@
     "chain_name": "Artela",
     "chain_id": "artela_11820",
     "coingecko": "",
-    "api": ["https://node-us-west-1.artela.network/api"],
+    "api": ["https://node-us-west-1.artela.network"],
     "rpc": ["https://node-us-west-1.artela.network/rpc"],
     "sdk_version": "0.47.4",
     "coin_type": "60",
