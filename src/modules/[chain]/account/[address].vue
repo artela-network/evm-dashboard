@@ -10,6 +10,7 @@ import DonutChart from '@/components/charts/DonutChart.vue';
 import { computed, ref } from '@vue/reactivity';
 import { onMounted } from 'vue';
 import { Icon } from '@iconify/vue';
+import { bech32 } from 'bech32';
 
 import type {
   AuthAccount,
@@ -129,6 +130,23 @@ function mapAmount(events:{type: string, attributes: {key: string, value: string
     .filter(x => x.key === 'YW1vdW50'|| x.key === `amount`)
     .map(x => x.key==='amount'? x.value : String.fromCharCode(...fromBase64(x.value)))
 }
+function cosmosToEvmAddress(cosmosAddress: string): string {
+  // 检查 bech32 是否已正确导入
+  if (!cosmosAddress) {
+    return ''
+  }
+
+  // 解码 Bech32 地址
+  const decoded = bech32.decode(cosmosAddress);
+  const pubkeyHash = new Uint8Array(bech32.fromWords(decoded.words));
+
+  // 将公钥哈希转换为 EVM 地址
+  const evmAddress = '0x' + Array.from(pubkeyHash)
+    .map(byte => byte.toString(16).padStart(2, '0'))
+    .join('');
+
+  return evmAddress;
+}
 </script>
 <template>
   <div v-if="account">
@@ -153,177 +171,12 @@ function mapAmount(events:{type: string, attributes: {key: string, value: string
         <!-- content -->
         <div class="flex flex-1 flex-col truncate pl-4">
           <h2 class="text-sm card-title">{{ $t('account.address') }}:</h2>
-          <span class="text-xs truncate"> {{ address }}</span>
+          <span class="text-xs truncate"> {{cosmosToEvmAddress(address) }}</span>
         </div>
       </div>
     </div>
 
-    <!-- Assets -->
-    <div class="bg-base-100 px-4 pt-3 pb-4 rounded mb-4 shadow">
-      <div class="flex justify-between">
-        <h2 class="card-title mb-4">{{ $t('account.assets') }}</h2>
-        <!-- button -->
-        <div class="flex justify-end mb-4 pr-5">
-            <label
-              for="send"
-              class="btn btn-primary btn-sm mr-2"
-              @click="dialog.open('send', {}, updateEvent)"
-              >{{ $t('account.btn_send') }}</label
-            >
-          </div>
-      </div>
-      <div class="grid md:!grid-cols-3">
-        <div class="md:!col-span-1">
-          <DonutChart :series="totalAmountByCategory" :labels="labels" />
-        </div>
-        <div class="mt-4 md:!col-span-2 md:!mt-0 md:!ml-4">          
-          <!-- list-->
-          <div class="">
-            <!--balances  -->
-            <div
-              class="flex items-center px-4 mb-2"
-              v-for="(balanceItem, index) in balances"
-              :key="index"
-            >
-              <div
-                class="w-9 h-9 rounded overflow-hidden flex items-center justify-center relative mr-4"
-              >
-                <Icon icon="mdi-account-cash" class="text-info" size="20" />
-                <div
-                  class="absolute top-0 bottom-0 left-0 right-0 bg-info opacity-20"
-                ></div>
-              </div>
-              <div class="flex-1">
-                <div class="text-sm font-semibold">
-                  {{ format.formatToken(balanceItem) }}
-                </div>
-                <div class="text-xs">
-                  {{ format.calculatePercent(balanceItem.amount, totalAmount) }}
-                </div>
-              </div>
-              <div
-                class="text-xs truncate relative py-1 px-3 rounded-full w-fit text-primary dark:invert mr-2"
-              >
-                <span
-                  class="inset-x-0 inset-y-0 opacity-10 absolute bg-primary dark:invert text-sm"
-                ></span>
-                ${{ format.tokenValue(balanceItem) }}                
-              </div>
-            </div>
-            <!--delegations  -->
-            <div
-              class="flex items-center px-4 mb-2"
-              v-for="(delegationItem, index) in delegations"
-              :key="index"
-            >
-              <div
-                class="w-9 h-9 rounded overflow-hidden flex items-center justify-center relative mr-4"
-              >
-                <Icon icon="mdi-user-clock" class="text-warning" size="20" />
-                <div
-                  class="absolute top-0 bottom-0 left-0 right-0 bg-warning opacity-20"
-                ></div>
-              </div>
-              <div class="flex-1">
-                <div class="text-sm font-semibold">
-                  {{ format.formatToken(delegationItem?.balance) }}
-                </div>
-                <div class="text-xs">
-                  {{
-                    format.calculatePercent(
-                      delegationItem?.balance?.amount,
-                      totalAmount
-                    )
-                  }}
-                </div>
-              </div>
-              <div
-                class="text-xs truncate relative py-1 px-3 rounded-full w-fit text-primary dark:invert mr-2"
-              >
-                <span
-                  class="inset-x-0 inset-y-0 opacity-10 absolute bg-primary dark:invert text-sm"
-                ></span>
-                ${{ format.tokenValue(delegationItem?.balance) }}                
-              </div>
-            </div>
-            <!-- rewards.total -->
-            <div
-              class="flex items-center px-4 mb-2"
-              v-for="(rewardItem, index) in rewards.total"
-              :key="index"
-            >
-              <div
-                class="w-9 h-9 rounded overflow-hidden flex items-center justify-center relative mr-4"
-              >
-                <Icon
-                  icon="mdi-account-arrow-up"
-                  class="text-success"
-                  size="20"
-                />
-                <div
-                  class="absolute top-0 bottom-0 left-0 right-0 bg-success opacity-20"
-                ></div>
-              </div>
-              <div class="flex-1">
-                <div class="text-sm font-semibold">
-                  {{ format.formatToken(rewardItem) }}
-                </div>
-                <div class="text-xs">{{ format.calculatePercent(rewardItem.amount, totalAmount) }}</div>
-              </div>
-              <div
-                class="text-xs truncate relative py-1 px-3 rounded-full w-fit text-primary dark:invert mr-2"
-              >
-                <span
-                  class="inset-x-0 inset-y-0 opacity-10 absolute bg-primary  dark:invert text-sm"
-                ></span>${{ format.tokenValue(rewardItem) }}
-                
-              </div>
-            </div>
-            <!-- mdi-account-arrow-right -->
-            <div class="flex items-center px-4">
-              <div
-                class="w-9 h-9 rounded overflow-hidden flex items-center justify-center relative mr-4"
-              >
-                <Icon
-                  icon="mdi-account-arrow-right"
-                  class="text-error"
-                  size="20"
-                />
-                <div
-                  class="absolute top-0 bottom-0 left-0 right-0 bg-error opacity-20"
-                ></div>
-              </div>
-              <div class="flex-1">
-                <div class="text-sm font-semibold">
-                  {{
-                    format.formatToken({
-                      amount: String(unbondingTotal),
-                      denom: stakingStore.params.bond_denom,
-                    })
-                  }}
-                </div>
-                <div class="text-xs">
-                  {{ format.calculatePercent(unbondingTotal, totalAmount) }}
-                </div>
-              </div>
-              <div
-                class="text-xs truncate relative py-1 px-3 rounded-full w-fit text-primary dark:invert mr-2"
-              >
-                <span class="inset-x-0 inset-y-0 opacity-10 absolute bg-primary dark:invert"></span>
-                ${{format.tokenValue({
-                      amount: String(unbondingTotal),
-                      denom: stakingStore.params.bond_denom,
-                    })
-                  }}                
-              </div>
-            </div>
-          </div>
-          <div class="mt-4 text-lg font-semibold mr-5 pl-5 border-t pt-4 text-right">
-            {{ $t('account.total_value') }}: ${{ totalValue }}
-          </div>
-        </div>
-      </div>
-    </div>
+
 
     <!-- Delegations -->
     <div class="bg-base-100 px-4 pt-3 pb-4 rounded mb-4 shadow">

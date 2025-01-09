@@ -488,7 +488,7 @@ function mapDelegators(messages: any[]) {
             </div>
           </div>
           <div class="">
-            <label
+            <!-- <label
               for="withdraw_commission"
               class="btn btn-primary w-full"
               @click="
@@ -497,7 +497,7 @@ function mapDelegators(messages: any[]) {
                 })
               "
               >{{ $t('account.btn_withdraw') }}</label
-            >
+            > -->
           </div>
         </div>
       </div>

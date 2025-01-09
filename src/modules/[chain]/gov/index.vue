@@ -29,6 +29,9 @@ function page(p: number) {
     store.fetchProposals(tab.value, pageRequest.value)
 }
 
+const openLink = () => {
+    window.open('https://docs.artela.network/develop/validate/ReferenceD', '_blank');
+}
 </script>
 <template>
     <div>
@@ -46,17 +49,22 @@ function page(p: number) {
                     stronger, more secure blockchain ecosystem.
                 </div>
             </div>
-            <div class="text-[#0000c9] cursor-pointer">
+            <div class="text-[#0000c9] cursor-pointer"
+                @click="openLink"
+            >
                 More
             </div>
         </div>
-        <div class="tabs bg-[#E6F4FF] text-center mt-4">
-            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '2' }" @click="changeTab('2')">{{
-                $t('gov.voting') }}</a>
-            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '3' }" @click="changeTab('3')">{{
-                $t('gov.passed') }}</a>
-            <a class="tab text-gray-400 uppercase" :class="{ 'tab-active': tab === '4' }" @click="changeTab('4')">{{
-                $t('gov.rejected') }}</a>
+        <div class="flex items-center justify-between py-1 bg-[#E6F4FF] px-3 mt-4">
+            <div class="tabs tabs-boxed bg-transparent">
+                <a class="tab text-gray-400 uppercase" :class="{ 'bg-[#0000C9] text-white': tab === '2' }" @click="changeTab('2')">{{
+                    $t('gov.voting') }}</a>
+                <a class="tab text-gray-400 uppercase" :class="{ 'bg-[#0000C9] text-white': tab === '3' }" @click="changeTab('3')">{{
+                    $t('gov.passed') }}</a>
+                <a class="tab text-gray-400 uppercase" :class="{ 'bg-[#0000C9] text-white': tab === '4' }" @click="changeTab('4')">{{
+                    $t('gov.rejected') }}</a>
+            </div>
+
         </div>
         <ProposalListItem :proposals="store?.proposals[tab]" />
         <PaginationBar :total="store?.proposals[tab]?.pagination?.total" :limit="pageRequest.limit" :callback="page" />

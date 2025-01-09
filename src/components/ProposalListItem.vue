@@ -134,6 +134,14 @@ function metaItem(metadata: string|undefined): { title: string; summary: string 
             </div>
           </td>
         </tr>
+        <tr v-if="!proposals?.proposals || proposals.proposals.length === 0">
+          <td colspan="5">
+            <div class="flex flex-col items-center justify-center py-8">
+              <div class="text-3xl font-bold opacity-20">¯\_(ツ)_/¯</div>
+              <div class="mt-4 text-base-content/60">No Proposals</div>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
 

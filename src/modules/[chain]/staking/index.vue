@@ -15,6 +15,7 @@ import { formatSeconds } from '@/libs/utils'
 import { bech32 } from 'bech32';
 import { diff } from 'semver';
 const props = defineProps(['chain']);
+import { useRouter } from 'vue-router';
 
 const staking = useStakingStore();
 const base = useBaseStore();
@@ -24,7 +25,7 @@ const chainStore = useBlockchain();
 const mintStore = useMintStore()
 const walletStore = useWalletStore();
 const blockchain = useBlockchain();
-
+const router = useRouter();
 
 const cache = JSON.parse(localStorage.getItem('avatars') || '{}');
 const avatars = ref(cache || {});
@@ -33,7 +34,7 @@ const yesterday = ref({} as Record<string, number>);
 const tab = ref('active');
 const unbondList = ref([] as Validator[]);
 const slashing = ref({} as SlashingParam)
-const isDataLoaded = ref(false);
+const isDataLoaded = ref(true);
 
 onMounted(async () => {
     try {
@@ -62,6 +63,12 @@ watch(() => chainStore.chainName, async (newChain, oldChain) => {
         // 可以调用一个包含所有加载逻辑的函数
         await loadAllData();
         isDataLoaded.value = true;
+    }
+});
+
+watch(() => walletStore.currentAddress, async (newAddress, oldAddress) => {
+    if (newAddress !== oldAddress) {
+        await walletStore.loadMyAsset();
     }
 });
 
@@ -306,10 +313,48 @@ base.$subscribe((_, s) => {
     }
 });
 
+const openLink = () => {
+    window.open('https://docs.artela.network/develop/validate/Delegators', '_blank');
+}
+
+const handleDelegate = async (validatorAddress: string) => {
+    try {
+        await dialog.open('delegate', {
+            validator_address: validatorAddress,
+        });
+
+        // 等待一段时间，确保交易被确认
+        await new Promise(resolve => setTimeout(resolve, 5000)); // 等待5秒
+
+        // 刷新钱包数据
+        await walletStore.loadMyAsset();
+
+        // 强制更新组件
+        if (typeof updateState === 'function') {
+            updateState();
+        }
+
+        // 如果使用了 Pinia，可以考虑重置整个 store
+        // walletStore.$reset();
+
+        // 通知用户
+        // 使用你的通知系统，例如 toast 或 alert
+        // showNotification('资产已更新');
+    } catch (error) {
+        console.error('委托操作或数据刷新失败:', error);
+        // 处理错误，可能需要通知用户
+    } finally {
+        walletStore.loadMyAsset()
+    }
+};
+const toWallet = () => {
+    router.push('/Artela');
+};
+
 loadAvatars();
 </script>
 <template>
-    <div v-if="isDataLoaded">
+    <div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
             <div class="w-[100px] flex-shrink-0">
                 <img src="../../../assets/page/staking.png" />
@@ -324,7 +369,7 @@ loadAvatars();
                     on-chain proposals you believe in. Tokens can be unlocked at any time.
                 </div>
             </div>
-            <div class="text-[#0000c9] cursor-pointer">
+            <div class="text-[#0000c9] cursor-pointer" @click="openLink">
                 More
             </div>
         </div>
@@ -341,19 +386,21 @@ loadAvatars();
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('account.balance') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ format.formatToken(walletStore.balanceOfStakingToken) }}
+                            {{ walletStore.currentAddress ? (walletStore.balanceOfStakingToken &&
+                                walletStore.balanceOfStakingToken.amount !== '0' ?
+                                format.formatToken(walletStore.balanceOfStakingToken) : '--') : '--' }}
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex-row items-center">
+                <div class="flex flex-row items-center cursor-pointer" @click="toWallet">
                     <div class="w-[44px]">
                         <img src="../../../assets/page/logo2.svg" />
                     </div>
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('module.staking') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ format.formatToken(walletStore.stakingAmount) }}
+                            {{ walletStore.currentAddress ? format.formatToken(walletStore.stakingAmount) : '--' }}
                         </div>
                     </div>
                 </div>
@@ -365,19 +412,19 @@ loadAvatars();
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('index.reward') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ format.formatToken(walletStore.rewardAmount) }}
+                            {{ walletStore.currentAddress ? format.formatToken(walletStore.rewardAmount) : '--' }}
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex-row items-center">
+                <div class="flex flex-row items-center cursor-pointer" @click="toWallet">
                     <div class="w-[44px]">
                         <img src="../../../assets/page/logo4.svg" />
                     </div>
                     <div class="rounded-sm px-4 py-3">
                         <div class="text-sm mb-1">{{ $t('index.unbonding') }}</div>
                         <div class="text-lg font-medium text-main">
-                            {{ format.formatToken(walletStore.unbondingAmount) }}
+                            {{ walletStore.currentAddress ? format.formatToken(walletStore.unbondingAmount) : '--' }}
                         </div>
                     </div>
                 </div>
@@ -388,8 +435,8 @@ loadAvatars();
         <div class="mt-6">
             <div class="flex items-center justify-between py-1 bg-[#E6F4FF] px-3">
                 <div class="tabs tabs-boxed bg-transparent">
-                    <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'featured' }"
-                        @click="tab = 'featured'">{{ $t('staking.popular') }}</a>
+                    <!-- <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'featured' }"
+                        @click="tab = 'featured'">{{ $t('staking.popular') }}</a> -->
                     <a class="tab text-gray-400" :class="{ 'bg-[#0000C9] text-white': tab === 'active' }"
                         @click="tab = 'active'">{{
                             $t('staking.active') }}</a>
@@ -410,11 +457,12 @@ loadAvatars();
                                 <th scope="col" class="uppercase font-normal" style="width: 3rem; position: relative">
                                     {{ $t('staking.rank') }}
                                 </th>
-                                <th scope="col" class="uppercase font-normal">{{ $t('staking.validator') }}</th>
+                                <th scope="col" class="uppercase font-normal text-left px-6">{{ $t('staking.validator') }}</th>
                                 <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.voting_power')
                                     }}</th>
                                 <!-- <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.24h_changes') }}</th> -->
-                                <th scope="col" class="text-right uppercase font-normal flex justify-center items-center">
+                                <th scope="col"
+                                    class="text-right uppercase font-normal flex justify-center items-center">
                                     {{ $t('staking.commission') }}
                                     <button class="tooltip tooltip-bottom"
                                         data-tip="The validator's fee rate will be applied; your effective yield = annual yield * (1 - commission).">
@@ -506,7 +554,7 @@ loadAvatars();
                                     {{ change24Text(v) }}
                                 </td> -->
                                 <!-- 👉 commission -->
-                                <td class="text-right text-xs">
+                                <td class="text-center text-xs">
                                     {{
                                         format.formatCommissionRate(
                                             v.commission?.commission_rates?.rate
@@ -520,12 +568,9 @@ loadAvatars();
                                     </div>
                                     <label v-else for="delegate"
                                         class="btn btn-sm btn-primary text-[#0000C9] border-transparent bg-[#F1F5FF] rounded-sm capitalize"
-                                        @click="
-                                            dialog.open('delegate', {
-                                                validator_address:
-                                                    v.operator_address,
-                                            })
-                                            ">{{ $t('account.btn_delegate') }}</label>
+                                        @click="handleDelegate(v.operator_address)">
+                                        {{ $t('account.btn_delegate') }}
+                                    </label>
                                 </td>
                             </tr>
                         </tbody>
@@ -549,10 +594,7 @@ loadAvatars();
             </div>
         </div>
     </div>
-    <div v-else>
-        <!-- 加载指示器或占位符 -->
-        Loading staking data...
-    </div>
+
 </template>
 
 <route>
