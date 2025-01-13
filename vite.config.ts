@@ -38,7 +38,14 @@ export default defineConfig({
     }),
     AutoImport({
       imports: [
-        'vue',
+        {
+          'vue': [
+            'ref',
+            'computed',
+            'watch',
+            'watchEffect',
+          ],
+        },
         'vue-router',
         '@vueuse/core',
         '@vueuse/math',
@@ -46,6 +53,7 @@ export default defineConfig({
         'pinia',
       ],
       vueTemplate: true,
+      dts: true,
     }),
     VueI18nPlugin({
       runtimeOnly: true,
