@@ -7,6 +7,7 @@ import {
     useStakingStore,
     useWalletStore,
     useTxDialog,
+    useApyStore
 } from '@/stores';
 import { computed, onMounted, ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
@@ -26,7 +27,7 @@ const mintStore = useMintStore()
 const walletStore = useWalletStore();
 const blockchain = useBlockchain();
 const router = useRouter();
-
+const apyStore = useApyStore();
 const cache = JSON.parse(localStorage.getItem('avatars') || '{}');
 const avatars = ref(cache || {});
 const latest = ref({} as Record<string, number>);
@@ -48,7 +49,8 @@ onMounted(async () => {
             chainStore.rpc.getSlashingParams().then(res => {
                 slashing.value = res.params
             }),
-            walletStore.loadMyAsset()
+            walletStore.loadMyAsset(),
+            apyStore.fetchCurrentApy()
         ]);
         isDataLoaded.value = true;
     } catch (error) {
@@ -365,7 +367,7 @@ loadAvatars();
                 </div>
                 <div class="text-sm">
                     Maximize your returns through ART staking: lock in your tokens to earn stable and predictable
-                    rewards, with an annual yield of up to 7.2%. Additionally, gain voting rights to support the
+                    rewards, with an annual yield of up to {{ apyStore.currentApy }}. Additionally, gain voting rights to support the
                     on-chain proposals you believe in. Tokens can be unlocked at any time.
                 </div>
             </div>

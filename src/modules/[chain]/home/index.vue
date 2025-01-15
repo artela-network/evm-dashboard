@@ -1,12 +1,22 @@
 <script lang="ts" setup>
-import { useBaseStore, useBlockchain, useWalletStore } from '@/stores';
+import { useBaseStore, useBlockchain, useWalletStore, useApyStore } from '@/stores';
 import { Icon } from '@iconify/vue';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { bech32 } from 'bech32';
 
 const walletStore = useWalletStore();
 const chainStore = useBlockchain();
 const baseStore = useBaseStore();
+
+const apyStore = useApyStore();
+
+// 在组件挂载时获取 APY 数据
+onMounted(async () => {
+  await apyStore.fetchCurrentApy();
+  console.log(apyStore.currentApy,'==--==0000000');
+});
+
+console.log(apyStore.currentApy,'==--==');
 
 function walletStateChange(res: any) {
   walletStore.setConnectedWallet(res.detail?.value);
@@ -152,7 +162,7 @@ const copyCurrentAddress2 = async () => {
           <div class="flex flex-col gap-3">
             <div class="text-2xl font-medium">Staking</div>
             <div class="">
-              Stake ART to earn up to 7.2% annual yield and gain voting rights. Use your voting rights to vote on the
+              Stake ART to earn up to {{ apyStore.currentApy }} annual yield and gain voting rights. Use your voting rights to vote on the
               on-chain proposals you support.
             </div>
             <RouterLink to="/Artela/staking" class="flex items-center mt-4">
