@@ -150,7 +150,7 @@ const copyCurrentAddress2 = async () => {
       <div class="flex flex-col md:!flex-row gap-4 mt-4">
         <div class="flex-1 flex flex-col md:!flex-row gap-3 px-4 md:!px-6 py-6 md:!py-8 bg-[#F5FBFF] relative">
           <div class="absolute top-0 right-0 bg-[#ED4E00] text-white px-2 py-1 text-[12px] rounded-tr">
-            Limited-time 5% <B></B>onus
+            Limited-time 310.8% Bonus
           </div>
           <div class="flex flex-col gap-3">
             <div class="text-2xl font-medium">Staking</div>
