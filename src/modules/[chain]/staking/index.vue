@@ -355,8 +355,8 @@ const toWallet = () => {
 const showAirdropDialog = ref(!localStorage.getItem('airdropDialogShown'));
 
 const handleCloseAirdropDialog = () => {
-  showAirdropDialog.value = false;
-  localStorage.setItem('airdropDialogShown', 'true');
+    showAirdropDialog.value = false;
+    localStorage.setItem('airdropDialogShown', 'true');
 };
 
 loadAvatars();
@@ -370,7 +370,8 @@ loadAvatars();
                 The First Staking++Deposit Returns 310.8% $ART
             </div>
             <div class="text-[12px] text-[#00001491]">
-                The event encourages participation in Artela Network through staking, rewarding users with a 310.8% annualized yield on their first stake for exactly 5 days.</div>
+                The event encourages participation in Artela Network through staking, rewarding users with a 310.8%
+                annualized yield on their first stake for exactly 5 days.</div>
         </div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
             <div class="w-[100px] flex-shrink-0">
@@ -536,7 +537,7 @@ loadAvatars();
                                                 v.description?.website ||
                                                 v.description?.identity ||
                                                 '-'
-                                            }}</span>
+                                                }}</span>
                                         </div>
                                     </div>
                                 </td>
