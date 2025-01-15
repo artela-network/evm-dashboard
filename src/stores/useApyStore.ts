@@ -1,27 +1,6 @@
 import { defineStore } from 'pinia';
 import { useBlockchain } from './useBlockchain';
 import { percent } from '@/libs/utils';
-import { CosmosRestClient } from '@/libs/client';
-
-interface BlockchainStore {
-  rest: string;
-  rpc: CosmosRestClient;
-}
-
-interface BankSupplyResponse {
-  supply: { denom: string; amount: string }[];
-}
-
-interface StakingPoolResponse {
-  pool: {
-    bonded_tokens: string;
-    not_bonded_tokens: string;
-  };
-}
-
-interface InflationResponse {
-  inflation: string;
-}
 
 export const useApyStore = defineStore('apystore', {
   state: () => ({
@@ -30,7 +9,7 @@ export const useApyStore = defineStore('apystore', {
   }),
 
   getters: {
-    blockchain(): BlockchainStore {
+    blockchain() {
       return useBlockchain();
     },
   },
