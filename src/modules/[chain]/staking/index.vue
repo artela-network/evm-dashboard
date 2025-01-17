@@ -17,6 +17,7 @@ import { bech32 } from 'bech32';
 import { diff } from 'semver';
 const props = defineProps(['chain']);
 import { useRouter } from 'vue-router';
+import AirdropDialog from '@/components/airdrop/Dialog.vue';
 
 const staking = useStakingStore();
 const base = useBaseStore();
@@ -353,17 +354,34 @@ const toWallet = () => {
     router.push('/Artela');
 };
 
+const showAirdropDialog = ref(!localStorage.getItem('airdropDialogShown'));
+
+const handleCloseAirdropDialog = () => {
+    showAirdropDialog.value = false;
+    localStorage.setItem('airdropDialogShown', 'true');
+};
+
 loadAvatars();
 </script>
 <template>
     <div>
+        <AirdropDialog :isOpen="showAirdropDialog" @close="handleCloseAirdropDialog" />
+        <div
+            class="flex flex-col md:!flex-col gap-1 px-2 md:!px-2 py-2 md:!py-2 bg-[#ED4E001A] border-[#ED4E00] border-1 rounded relative">
+            <div class="text-[#ED4E00]">
+                The First Staking++Deposit Returns 310.8% $ART
+            </div>
+            <div class="text-[12px] text-[#00001491]">
+                The event encourages participation in Artela Network through staking, rewarding users with a 310.8%
+                annualized yield on their first stake for exactly 5 days.</div>
+        </div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
             <div class="w-[100px] flex-shrink-0">
                 <img src="../../../assets/page/staking.png" />
             </div>
             <div class="flex flex-col gap-2 justify-around py-5">
                 <div class="text-xl font-medium">
-                    Maximize On-Chain Returns by Staking Your ART
+                    Maximize On-Chain Returns by Staking Your $ART
                 </div>
                 <div class="text-sm">
                     Maximize your returns through ART staking: lock in your tokens to earn stable and predictable
@@ -459,7 +477,8 @@ loadAvatars();
                                 <th scope="col" class="uppercase font-normal" style="width: 3rem; position: relative">
                                     {{ $t('staking.rank') }}
                                 </th>
-                                <th scope="col" class="uppercase font-normal text-left px-6">{{ $t('staking.validator') }}</th>
+                                <th scope="col" class="uppercase font-normal text-left px-6">{{ $t('staking.validator')
+                                    }}</th>
                                 <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.voting_power')
                                     }}</th>
                                 <!-- <th scope="col" class="text-right uppercase font-normal">{{ $t('staking.24h_changes') }}</th> -->
