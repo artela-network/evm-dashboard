@@ -33,7 +33,8 @@ const handleClick = () => {
                         The First Staking++Deposit Returns 310.8% $ART
                     </h3>
                     <p class="text-sm text-[#1B1B2B]/60 sm:text-base">
-                        From now until 00:00:00 UTC on November 20, 2024, users will receive a 310.8% $ART return on their first staking, provided the staking period exceeds 7 days. Rewards will be distributed by December 1, 2024. Don’t miss out—join now!
+                        😄Jumpstart your Artela journey with our Staking++ event! Earn an impressive 310.8% annualized yield on your first stake held for exactly 5 days. This exciting opportunity rewards early participants while fostering deeper community engagement and long-term commitment to the Artela Network ecosystem.
+                        <a href="https://artela.notion.site/About-Artela-Staking-First-Stake-Bonus-310-8-APY-Reward-17cdb9fb849080959662d4e37b852b65?pvs=74" target="_blank" class="text-[#ED4E00] hover:underline">learn more</a>
                     </p>
                 </div>
 
