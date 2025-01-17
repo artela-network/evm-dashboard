@@ -7,6 +7,7 @@ const props = defineProps({
     type: Object as PropType<{ title: string; items: Array<any> }>,
   },
 });
+console.log(props.cardItem,'==--==7777');
 
 const formatter = useFormatter();
 function calculateValue(value: any) {

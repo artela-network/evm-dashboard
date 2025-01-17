@@ -8,6 +8,7 @@ const chain = ref(store.chain);
 onMounted(() => {
   // fetch the data
   store.initial();
+  console.log(store.staking,'==--==888888');
 });
 </script>
 <template>
