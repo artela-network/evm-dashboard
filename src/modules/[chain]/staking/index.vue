@@ -373,7 +373,9 @@ loadAvatars();
             </div>
             <div class="text-[12px] text-[#00001491]">
                 The event encourages participation in Artela Network through staking, rewarding users with a 310.8%
-                annualized yield on their first stake for exactly 5 days.</div>
+                annualized yield on their first stake for exactly 5 days.
+                <a href="https://artela.notion.site/About-Artela-Staking-First-Stake-Bonus-310-8-APY-Reward-17cdb9fb849080959662d4e37b852b65?pvs=74" target="_blank" class="text-[#ED4E00] hover:underline">learn more</a>
+            </div>
         </div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
             <div class="w-[100px] flex-shrink-0">
