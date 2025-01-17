@@ -80,7 +80,7 @@ const FAQClick = () => {
   window.open('https://arthome.artela.network/arthome/FAQ', '_blank')
 }
 const NetworkClick = () => {
-  window.open('https://artscan.artela.network/', '_blank')
+  window.open('https://betanet-scan.artela.network/', '_blank')
 }
 const HomeClick = () => {
   if (window.location.pathname === '/Artela/home') {
