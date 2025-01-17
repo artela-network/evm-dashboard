@@ -41,6 +41,7 @@ const unbonding = ref([] as UnbondingResponses[]);
 const unbondingTotal = ref(0);
 const chart = {};
 onMounted(() => {
+  store.initial();
   loadAccount(props.address);
 });
 const totalAmountByCategory = computed(() => {
@@ -65,8 +66,9 @@ const totalAmountByCategory = computed(() => {
   return [sumBal, sumDel, sumRew, sumUn];
 });
 function calculateValue(value: any) {
+  if (!value) return '--';
   if (Array.isArray(value)) {
-    return (value[0] && value[0].amount) || '-';
+    return (value[0] && value[0].amount) || '--';
   }
   if (String(value).search(/^\d+s$/g) > -1) {
     return formatSeconds(value)
@@ -83,6 +85,10 @@ const totalAmount = computed(() => {
   return totalAmountByCategory.value.reduce((p, c) => c + p, 0);
 });
 const store = useParamStore();
+
+const unbondingTime = computed(() => {
+  return store.staking?.items?.find(item => item.subtitle === 'unbonding_time')?.value || '--';
+});
 
 const totalValue = computed(() => {
   let value = 0;
@@ -237,7 +243,7 @@ console.log(unbonding, '==----===')
     <div class="bg-base-100 px-4 pt-3 pb-4 rounded mb-4 shadow" v-if="unbonding && unbonding.length > 0">
       <h2 class="card-title mb-4">Undelegating Queue
         <button class="tooltip"
-          :data-tip="`Your undelegating ART are displayed here. There is a ${calculateValue(store.staking.items.find(item => item.subtitle === 'unbonding_time')?.value)} minutes waiting period for unlocking, and Remaining shows the time left until the process is complete.`">
+          :data-tip="`Your undelegating ART are displayed here. There is a ${calculateValue(unbondingTime)} minutes waiting period for unlocking, and Remaining shows the time left until the process is complete.`">
           <img src="@/assets/tip.svg" />
         </button>
       </h2>

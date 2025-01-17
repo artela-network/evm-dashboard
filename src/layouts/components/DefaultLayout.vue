@@ -77,10 +77,10 @@ const behind = computed(() => {
 
 dayjs()
 const FAQClick = () => {
-  window.open('https://renaissance.artela.network/vision/FAQ', '_blank')
+  window.open('https://arthome.artela.network/arthome/FAQ', '_blank')
 }
 const NetworkClick = () => {
-  window.open('https://betanet-scan.artela.network/', '_blank')
+  window.open('https://artscan.artela.network/', '_blank')
 }
 const HomeClick = () => {
   if (window.location.pathname === '/Artela/home') {
