@@ -11,6 +11,14 @@ import type {
 import { useStakingStore } from './useStakingStore';
 import router from '@/router'
 
+declare global {
+  interface Window {
+    ethereum?: {
+      request: (args: { method: string; params?: any[] }) => Promise<any>;
+    };
+  }
+}
+
 export const useWalletStore = defineStore('walletStore', {
   state: () => {
     return {
@@ -85,7 +93,6 @@ export const useWalletStore = defineStore('walletStore', {
     }
   },
   actions: {
-
     async loadMyAsset() {
       if (!this.currentAddress) return;
       this.blockchain.rpc.getBankBalances(this.currentAddress).then((x) => {
@@ -118,11 +125,33 @@ export const useWalletStore = defineStore('walletStore', {
         this.currentAddress
       );
     },
-    disconnect() {
+    async disconnect() {
       const chainStore = useBlockchain();
       const key = chainStore.defaultHDPath;
       localStorage.removeItem(key);
-      this.$reset()
+      
+      // 清除状态
+      this.balances = [];
+      this.delegations = [];
+      this.unbonding = [];
+      this.rewards = {total: [], rewards: []};
+      this.wallet = {} as WalletConnected;
+
+      // 断开 MetaMask 连接
+      if (window.ethereum) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_revokePermissions",
+            params: [{
+              eth_accounts: {}
+            }]
+          });
+        } catch (error) {
+          console.log("Error disconnecting from MetaMask:", error);
+        }
+      }
+      
+      router.push('/');
     },
     setConnectedWallet(value: WalletConnected) {
       if(value) this.wallet = value 

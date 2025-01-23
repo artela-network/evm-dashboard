@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "serve": "vite",
-    "build": "run-p type-check build-only",
+    "build": "NODE_OPTIONS='--max-old-space-size=8192' vite build",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit"
