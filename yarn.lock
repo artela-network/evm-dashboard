@@ -20,10 +20,10 @@
   resolved "https://registry.yarnpkg.com/@antfu/utils/-/utils-0.7.6.tgz#30a046419b9e1ecd276e53d41ab68fb6c558c04d"
   integrity sha512-pvFiLP2BeOKA/ZOS6jxx4XhKzdVLHDhGlFEaZ2flWWYf2xOqVniqpk38I04DFRyz+L0ASggl7SkItTc+ZLju4w==
 
-"@artela/wallet-widget@0.1.29":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@artela/wallet-widget/-/wallet-widget-0.1.29.tgz#e99eb1b318d3e097abd578217a81c94b932d7ac5"
-  integrity sha512-ZDUhdWOHt+WdVg9qlFtuEp/ziwRUa1V4N4xHFa92qUH57PZ6/gZuwBsFGAkyw5Bxz+O9OzR6/qGKeqIZlHK42g==
+"@artela/wallet-widget@^0.1.30":
+  version "0.1.30"
+  resolved "https://registry.yarnpkg.com/@artela/wallet-widget/-/wallet-widget-0.1.30.tgz#e46a837ed95a684feaa87b963736a51af36d60ce"
+  integrity sha512-GW3cqRd+39jZJL1abXM2ZmZXtewhkkHD4g9mDcZn8DG5BPyVFIjuUVDHRWhPIREqHsPxDoghRb8bttkJygbvtg==
   dependencies:
     "@cosmjs/amino" "^0.32.0"
     "@cosmjs/cosmwasm-stargate" "^0.32.0"
@@ -47,6 +47,7 @@
     ping-widget "^0.0.33"
     vue "^3.2.47"
     vue3-webcomponent-wrapper "^0.2.0"
+    yarn "^1.22.22"
 
 "@babel/code-frame@^7.18.6", "@babel/code-frame@^7.22.13":
   version "7.22.13"
@@ -8643,6 +8644,11 @@ yargs@^15.3.1:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
+
+yarn@^1.22.22:
+  version "1.22.22"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.22.tgz#ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  integrity sha512-prL3kGtyG7o9Z9Sv8IPfBNrWTDmXB4Qbes8A9rEzt6wkJV8mUvoirjU0Mp3GGAU06Y0XQyA3/2/RQFVuK7MTfg==
 
 yocto-queue@^0.1.0:
   version "0.1.0"
