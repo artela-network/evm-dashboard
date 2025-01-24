@@ -17,7 +17,6 @@ import { bech32 } from 'bech32';
 import { diff } from 'semver';
 const props = defineProps(['chain']);
 import { useRouter } from 'vue-router';
-import AirdropDialog from '@/components/airdrop/Dialog.vue';
 
 const staking = useStakingStore();
 const base = useBaseStore();
@@ -354,29 +353,12 @@ const toWallet = () => {
     router.push('/Artela');
 };
 
-const showAirdropDialog = ref(!localStorage.getItem('airdropDialogShown'));
 
-const handleCloseAirdropDialog = () => {
-    showAirdropDialog.value = false;
-    localStorage.setItem('airdropDialogShown', 'true');
-};
 
 loadAvatars();
 </script>
 <template>
     <div>
-        <AirdropDialog :isOpen="showAirdropDialog" @close="handleCloseAirdropDialog" />
-        <div
-            class="flex flex-col md:!flex-col gap-1 px-2 md:!px-2 py-2 md:!py-2 bg-[#ED4E001A] border-[#ED4E00] border-1 rounded relative">
-            <div class="text-[#ED4E00]">
-                The First Staking++Deposit Returns 310.8% $ART
-            </div>
-            <div class="text-[12px] text-[#00001491]">
-                The event encourages participation in Artela Network through staking, rewarding users with a 310.8%
-                annualized yield on their first stake for exactly 5 days.
-                <a href="https://artela.notion.site/About-Artela-Staking-First-Stake-Bonus-310-8-APY-Reward-17cdb9fb849080959662d4e37b852b65?pvs=74" target="_blank" class="text-[#ED4E00] hover:underline">learn more</a>
-            </div>
-        </div>
         <div class="flex gap-4 bg-base-100 rounded mt-4 shadow py-5 px-6">
             <div class="w-[100px] flex-shrink-0">
                 <img src="../../../assets/page/staking.png" />
